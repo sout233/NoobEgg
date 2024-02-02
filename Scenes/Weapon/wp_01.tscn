@@ -1,0 +1,21 @@
+[gd_scene load_steps=3 format=3 uid="uid://bdbmffyne6x7v"]
+
+[ext_resource type="Texture2D" uid="uid://q5tleenepw88" path="res://Archive/Resource/images/wp01.png" id="1_ay5pl"]
+[ext_resource type="Script" path="res://Scenes/Weapon/WeaponGun.cs" id="1_h5je4"]
+
+[node name="WP01" type="Node2D"]
+script = ExtResource("1_h5je4")
+KnockBackForce = 200.0
+
+[node name="Wp01" type="Sprite2D" parent="."]
+scale = Vector2(0.8, 0.8)
+texture = ExtResource("1_ay5pl")
+
+[node name="MuzzleMarker" type="Marker2D" parent="."]
+position = Vector2(11, -1)
+
+[node name="LeftHandMarker" type="Marker2D" parent="."]
+position = Vector2(-4, 1)
+
+[node name="RightHandMarker" type="Marker2D" parent="."]
+position = Vector2(5, 0)

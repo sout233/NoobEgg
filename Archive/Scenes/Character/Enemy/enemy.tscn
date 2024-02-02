@@ -1,0 +1,96 @@
+[gd_scene load_steps=15 format=3 uid="uid://cb1x8b6hsg04a"]
+
+[ext_resource type="Script" path="res://Archive/Scenes/Character/Enemy/Enemy.gd" id="1_orlsy"]
+[ext_resource type="Texture2D" uid="uid://5kjp472vdaj8" path="res://Archive/Resource/idk/colored-transparent.png" id="2_2fp7x"]
+[ext_resource type="AudioStream" uid="uid://bmknwrhcrowkl" path="res://Archive/Resource/audio/hit.ogg" id="3_5sjrh"]
+[ext_resource type="PackedScene" uid="uid://dy6dehim8ybh8" path="res://Scenes/Character/killed_particles.tscn" id="3_rsvmu"]
+[ext_resource type="Script" path="res://Archive/Scenes/Functions/Classes/HitboxComp/HitboxComp.gd" id="4_bego6"]
+[ext_resource type="Script" path="res://Archive/Scenes/Functions/Classes/HealthComp/HealthComp.gd" id="5_vxp1h"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_66oor"]
+atlas = ExtResource("2_2fp7x")
+region = Rect2(306, 119, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qwu5s"]
+atlas = ExtResource("2_2fp7x")
+region = Rect2(323, 119, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ub0wt"]
+atlas = ExtResource("2_2fp7x")
+region = Rect2(340, 119, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_frwlg"]
+atlas = ExtResource("2_2fp7x")
+region = Rect2(357, 119, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wixpg"]
+atlas = ExtResource("2_2fp7x")
+region = Rect2(374, 119, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xyja8"]
+atlas = ExtResource("2_2fp7x")
+region = Rect2(391, 119, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_fpy05"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_66oor")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qwu5s")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ub0wt")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_frwlg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wixpg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xyja8")
+}],
+"loop": true,
+"name": &"default",
+"speed": 8.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_k5lxf"]
+radius = 43.0
+height = 86.0
+
+[node name="Enemy" type="CharacterBody2D" groups=["Enemy"]]
+z_index = 4
+script = ExtResource("1_orlsy")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+modulate = Color(1, 0, 0.0156863, 1)
+scale = Vector2(5, 5)
+sprite_frames = SubResource("SpriteFrames_fpy05")
+autoplay = "default"
+frame_progress = 0.853147
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 7)
+shape = SubResource("CapsuleShape2D_k5lxf")
+disabled = true
+
+[node name="KilledParticles" parent="." instance=ExtResource("3_rsvmu")]
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_5sjrh")
+
+[node name="HitboxComp" type="Area2D" parent="." node_paths=PackedStringArray("health_comp")]
+script = ExtResource("4_bego6")
+health_comp = NodePath("../HealthComp")
+self_damage_amount = 5.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitboxComp"]
+position = Vector2(0, 7)
+shape = SubResource("CapsuleShape2D_k5lxf")
+
+[node name="HealthComp" type="Node" parent="."]
+script = ExtResource("5_vxp1h")
+MAX_HEALTH = 10.0

@@ -1,0 +1,117 @@
+[gd_scene load_steps=16 format=3 uid="uid://d1yybdl3l8mwi"]
+
+[ext_resource type="Texture2D" uid="uid://uxcojnfdoa4w" path="res://Resources/Images/swamp_man_ani.png" id="1_ut4cp"]
+[ext_resource type="Script" path="res://Scenes/Character/Enemy/SwampMan.cs" id="1_wqhdr"]
+[ext_resource type="PackedScene" uid="uid://dy6dehim8ybh8" path="res://Scenes/Character/killed_particles.tscn" id="2_jaxrj"]
+[ext_resource type="AudioStream" uid="uid://bmknwrhcrowkl" path="res://Archive/Resource/audio/hit.ogg" id="2_mii53"]
+[ext_resource type="Script" path="res://Archive/Scenes/Functions/Classes/HealthComp/HealthComp.gd" id="3_wl55q"]
+[ext_resource type="Script" path="res://Scenes/Character/Enemy/HitBox.cs" id="5_de080"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kmhn3"]
+atlas = ExtResource("1_ut4cp")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qdcbf"]
+atlas = ExtResource("1_ut4cp")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0kvss"]
+atlas = ExtResource("1_ut4cp")
+region = Rect2(0, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wo5iy"]
+atlas = ExtResource("1_ut4cp")
+region = Rect2(16, 16, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_nema5"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kmhn3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qdcbf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0kvss")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wo5iy")
+}],
+"loop": true,
+"name": &"Walking",
+"speed": 4.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_u08hr"]
+radius = 43.0
+height = 86.0
+
+[sub_resource type="Curve" id="Curve_nnmxt"]
+max_value = 100.0
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 24.2105), 55.2007, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Gradient" id="Gradient_4k635"]
+colors = PackedColorArray(0.777822, 0.124764, 5.77569e-07, 1, 0.701961, 0, 0, 0)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_nnul0"]
+size = Vector2(75, 72)
+
+[node name="SwampMan" type="CharacterBody2D" node_paths=PackedStringArray("AttackedSoundPlayer")]
+z_index = 3
+script = ExtResource("1_wqhdr")
+MaxHealth = 50.0
+Speed = 250.0
+AttackedParticles = ExtResource("2_jaxrj")
+AttackedSoundPlayer = NodePath("AudioStreamPlayer2D")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+scale = Vector2(5, 5)
+sprite_frames = SubResource("SpriteFrames_nema5")
+animation = &"Walking"
+autoplay = "Walking"
+frame_progress = 0.684112
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 7)
+shape = SubResource("CapsuleShape2D_u08hr")
+disabled = true
+
+[node name="KilledParticles" type="CPUParticles2D" parent="."]
+z_index = 2
+emitting = false
+amount = 60
+lifetime = 20.0
+one_shot = true
+speed_scale = 5.0
+explosiveness = 1.0
+randomness = 0.5
+emission_shape = 3
+emission_rect_extents = Vector2(1, 1)
+spread = 180.0
+gravity = Vector2(10, 100)
+initial_velocity_min = 50.0
+initial_velocity_max = 200.0
+angular_velocity_max = 90.0
+linear_accel_min = -10.0
+damping_min = 100.0
+damping_max = 200.0
+damping_curve = SubResource("Curve_nnmxt")
+scale_amount_min = 5.0
+scale_amount_max = 15.0
+color_ramp = SubResource("Gradient_4k635")
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("2_mii53")
+
+[node name="HealthComp" type="Node" parent="."]
+script = ExtResource("3_wl55q")
+MAX_HEALTH = 10.0
+
+[node name="HitBox" type="Area2D" parent="."]
+script = ExtResource("5_de080")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitBox"]
+position = Vector2(1.5, 8)
+shape = SubResource("RectangleShape2D_nnul0")

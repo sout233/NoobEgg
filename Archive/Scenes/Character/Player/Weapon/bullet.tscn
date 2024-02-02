@@ -1,0 +1,51 @@
+[gd_scene load_steps=9 format=3 uid="uid://bwgfr4mu8recq"]
+
+[ext_resource type="Script" path="res://Archive/Scenes/Character/Player/Weapon/Bullet.gd" id="1_assun"]
+[ext_resource type="Script" path="res://Archive/Scenes/Character/Player/Weapon/BulletParticles.gd" id="2_uqpgb"]
+[ext_resource type="AudioStream" uid="uid://bsltaaci44xyv" path="res://Archive/Resource/audio/gun_oneshot.ogg" id="3_vbcdk"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_xyeno"]
+
+[sub_resource type="Gradient" id="Gradient_hiq1f"]
+colors = PackedColorArray(1, 0, 0, 1, 0.930268, 0.473508, 0, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_wfif3"]
+gradient = SubResource("Gradient_hiq1f")
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_p832v"]
+radius = 7.07107
+
+[sub_resource type="Gradient" id="Gradient_84cn3"]
+colors = PackedColorArray(1, 1, 0.25098, 1, 0, 0, 0, 0)
+
+[node name="Bullet" type="Area2D"]
+script = ExtResource("1_assun")
+
+[node name="MeshInstance2D" type="MeshInstance2D" parent="."]
+scale = Vector2(14, 14)
+mesh = SubResource("SphereMesh_xyeno")
+texture = SubResource("GradientTexture1D_wfif3")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_p832v")
+
+[node name="BulletParticles" type="CPUParticles2D" parent="."]
+amount = 50
+lifetime = 0.4
+lifetime_randomness = 0.5
+gravity = Vector2(0, 100)
+scale_amount_min = 5.0
+scale_amount_max = 15.0
+color = Color(1, 0.360784, 0.372549, 1)
+color_ramp = SubResource("Gradient_84cn3")
+script = ExtResource("2_uqpgb")
+
+[node name="Timer" type="Timer" parent="BulletParticles"]
+one_shot = true
+
+[node name="BulletSoundPlayer" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_vbcdk")
+volume_db = -3.0
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]
+[connection signal="timeout" from="BulletParticles/Timer" to="BulletParticles" method="_on_timer_timeout"]

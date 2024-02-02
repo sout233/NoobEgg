@@ -1,0 +1,33 @@
+[gd_scene load_steps=3 format=3 uid="uid://dy6dehim8ybh8"]
+
+[sub_resource type="Curve" id="Curve_f1qdw"]
+max_value = 100.0
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 24.2105), 55.2007, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Gradient" id="Gradient_06jxh"]
+colors = PackedColorArray(0.777822, 0.124764, 5.77569e-07, 1, 0.701961, 0, 0, 0)
+
+[node name="KilledParticles" type="CPUParticles2D"]
+z_index = 2
+emitting = false
+amount = 60
+lifetime = 20.0
+one_shot = true
+speed_scale = 5.0
+explosiveness = 1.0
+randomness = 0.5
+emission_shape = 3
+emission_rect_extents = Vector2(1, 1)
+spread = 180.0
+gravity = Vector2(10, 100)
+initial_velocity_min = 50.0
+initial_velocity_max = 200.0
+angular_velocity_max = 90.0
+linear_accel_min = -10.0
+damping_min = 100.0
+damping_max = 200.0
+damping_curve = SubResource("Curve_f1qdw")
+scale_amount_min = 5.0
+scale_amount_max = 15.0
+color_ramp = SubResource("Gradient_06jxh")

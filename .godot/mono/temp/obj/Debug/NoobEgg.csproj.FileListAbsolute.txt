@@ -1,0 +1,17 @@
+E:\GODOT_PROJECT\NOOBEGG\.godot\mono\temp\obj\Debug\NoobEgg.csproj.AssemblyReference.cache
+E:\GODOT_PROJECT\NOOBEGG\.godot\mono\temp\obj\Debug\NoobEgg.GeneratedMSBuildEditorConfig.editorconfig
+E:\GODOT_PROJECT\NOOBEGG\.godot\mono\temp\obj\Debug\NoobEgg.AssemblyInfoInputs.cache
+E:\GODOT_PROJECT\NOOBEGG\.godot\mono\temp\obj\Debug\NoobEgg.AssemblyInfo.cs
+E:\GODOT_PROJECT\NOOBEGG\.godot\mono\temp\obj\Debug\NoobEgg.csproj.CoreCompileInputs.cache
+E:\godot_project\NoobEgg\.godot\mono\temp\bin\Debug\NoobEgg.deps.json
+E:\godot_project\NoobEgg\.godot\mono\temp\bin\Debug\NoobEgg.runtimeconfig.json
+E:\godot_project\NoobEgg\.godot\mono\temp\bin\Debug\NoobEgg.dll
+E:\godot_project\NoobEgg\.godot\mono\temp\bin\Debug\NoobEgg.pdb
+E:\godot_project\NoobEgg\.godot\mono\temp\bin\Debug\GodotSharp.dll
+E:\godot_project\NoobEgg\.godot\mono\temp\bin\Debug\GodotSharpEditor.dll
+E:\godot_project\NoobEgg\.godot\mono\temp\obj\Debug\NoobEgg.csproj.CopyComplete
+E:\godot_project\NoobEgg\.godot\mono\temp\obj\Debug\NoobEgg.dll
+E:\godot_project\NoobEgg\.godot\mono\temp\obj\Debug\refint\NoobEgg.dll
+E:\godot_project\NoobEgg\.godot\mono\temp\obj\Debug\NoobEgg.pdb
+E:\godot_project\NoobEgg\.godot\mono\temp\obj\Debug\NoobEgg.genruntimeconfig.cache
+E:\godot_project\NoobEgg\.godot\mono\temp\obj\Debug\ref\NoobEgg.dll

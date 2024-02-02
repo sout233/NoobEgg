@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://c5beph2d0tfim"]
+
+[ext_resource type="Script" path="res://Archive/Scenes/Functions/Classes/HitboxComp/HitboxComp.gd" id="1_nbcv3"]
+
+[node name="HitboxComp" type="Area2D"]
+script = ExtResource("1_nbcv3")
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]
