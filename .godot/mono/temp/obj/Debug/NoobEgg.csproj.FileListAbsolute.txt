@@ -15,3 +15,4 @@ E:\godot_project\NoobEgg\.godot\mono\temp\obj\Debug\refint\NoobEgg.dll
 E:\godot_project\NoobEgg\.godot\mono\temp\obj\Debug\NoobEgg.pdb
 E:\godot_project\NoobEgg\.godot\mono\temp\obj\Debug\NoobEgg.genruntimeconfig.cache
 E:\godot_project\NoobEgg\.godot\mono\temp\obj\Debug\ref\NoobEgg.dll
+E:\godot_project\NoobEgg\.godot\mono\temp\obj\Debug\NoobEgg.sourcelink.json

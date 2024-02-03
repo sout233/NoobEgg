@@ -1,3 +1,6 @@
+Camera2D
+WorldEnvironment
+Timer
 CanvasLayer
 CollisionShape2D
 Area2D

@@ -33,6 +33,8 @@ public partial class Bullet : Area2D
             Attack.StartDirection = (GetGlobalMousePosition() - GlobalPosition).Normalized();
 
             enemy.Attacked(Attack);
+
+            QueueFree();
         }
     }
 }

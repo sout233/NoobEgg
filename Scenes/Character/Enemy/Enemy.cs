@@ -10,6 +10,8 @@ public partial class Enemy : CharacterBody2D
     private float _damage = 10;
     private float _maxHealth = 10;
     private float _speed = 300;
+    private float _weight = 50;
+
 
     public float Health
     {
@@ -42,6 +44,13 @@ public partial class Enemy : CharacterBody2D
         set { _speed = value; }
     }
 
+    [Export]
+    public float Weight
+    {
+        get { return _weight; }
+        set { _weight = value; }
+    }
+
 
     [Export]
     public PackedScene AttackedParticles;
@@ -60,13 +69,14 @@ public partial class Enemy : CharacterBody2D
 
     public override void _PhysicsProcess(double delta)
     {
-        Velocity = (SceneNodes.CurrentPlayer.Position - Position).Normalized() * Speed + _knockback;
-        MoveAndSlide();
         _knockback = NoobHelper.LerpV2(_knockback, Vector2.Zero, 0.1f);
+        Velocity = (SceneNodes.CurrentPlayer.Position - Position).Normalized() * Speed + _knockback - Vector2.One * Weight;
+        MoveAndSlide();
     }
 
     public void Attacked(Attack attack)
     {
+        _knockback = Vector2.Zero;
         var attackedParticles = AttackedParticles.Instantiate<CpuParticles2D>();
         attackedParticles.Gravity = attack.StartDirection * 100;
         attackedParticles.Emitting = true;
@@ -78,8 +88,6 @@ public partial class Enemy : CharacterBody2D
         Health -= attack.Damage;
 
         _knockback = attack.StartDirection * attack.KnockBackForce;
-
-        GD.Print(_knockback);
 
         if (Health <= 0)
         {

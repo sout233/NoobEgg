@@ -33,5 +33,7 @@ public partial class Spawner : Marker2D
         var enemy = Enemy.Instantiate<Enemy>();
         enemy.GlobalPosition = GlobalPosition + new Vector2(random.Next(-2, 2), random.Next(-2, 2));
         GetTree().CurrentScene.AddChild(enemy);
+
+        QueueFree();
     }
 }
