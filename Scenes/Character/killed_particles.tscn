@@ -6,7 +6,7 @@ _data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 24.2105), 55.2007, 0.0, 0, 0]
 point_count = 2
 
 [sub_resource type="Gradient" id="Gradient_06jxh"]
-colors = PackedColorArray(0.777822, 0.124764, 5.77569e-07, 1, 0.701961, 0, 0, 0)
+colors = PackedColorArray(0.474797, 1.17319e-06, 7.21961e-08, 1, 0.701961, 0, 0, 0)
 
 [node name="KilledParticles" type="CPUParticles2D"]
 z_index = 2

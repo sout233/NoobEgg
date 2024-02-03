@@ -306,9 +306,10 @@ layer = 3
 
 [node name="AimCursor" parent="TopLayer" instance=ExtResource("7_ywtjx")]
 
+[node name="Bullet" parent="." instance=ExtResource("8_3civp")]
+modulate = Color(22.024, 1, 1, 1)
+
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_qkjis")
-
-[node name="Bullet" parent="." instance=ExtResource("8_3civp")]
 
 [connection signal="timeout" from="GameManager/SpawnTimer" to="GameManager" method="EnemyGenerate"]

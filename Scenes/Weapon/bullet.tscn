@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://urev5777u6s2"]
+[gd_scene load_steps=9 format=3 uid="uid://urev5777u6s2"]
 
 [ext_resource type="Script" path="res://Scenes/Weapon/Bullet.cs" id="1_mvfvf"]
 [ext_resource type="Script" path="res://Archive/Scenes/Character/Player/Weapon/BulletParticles.gd" id="2_ufw4o"]
@@ -14,9 +14,6 @@ gradient = SubResource("Gradient_hiq1f")
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_p832v"]
 radius = 7.07107
-
-[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_62h7q"]
-blend_mode = 1
 
 [sub_resource type="Gradient" id="Gradient_84cn3"]
 colors = PackedColorArray(1, 1, 0.25098, 1, 0, 0, 0, 0)
@@ -34,14 +31,14 @@ texture = SubResource("GradientTexture1D_wfif3")
 shape = SubResource("CircleShape2D_p832v")
 
 [node name="BulletParticles" type="CPUParticles2D" parent="."]
-material = SubResource("CanvasItemMaterial_62h7q")
+modulate = Color(4, 1, 1, 1)
 amount = 50
 lifetime = 0.4
 lifetime_randomness = 0.5
 gravity = Vector2(0, 100)
 scale_amount_min = 5.0
 scale_amount_max = 15.0
-color = Color(1, 0.360784, 0.372549, 1)
+color = Color(0.992157, 0, 0.211765, 1)
 color_ramp = SubResource("Gradient_84cn3")
 script = ExtResource("2_ufw4o")
 
