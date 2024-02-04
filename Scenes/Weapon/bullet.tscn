@@ -33,7 +33,7 @@ shape = SubResource("CircleShape2D_p832v")
 [node name="BulletParticles" type="CPUParticles2D" parent="."]
 modulate = Color(4, 1, 1, 1)
 amount = 50
-lifetime = 0.4
+speed_scale = 19.22
 lifetime_randomness = 0.5
 gravity = Vector2(0, 100)
 scale_amount_min = 5.0
@@ -50,5 +50,12 @@ autostart = true
 stream = ExtResource("3_7ctls")
 volume_db = -3.0
 
+[node name="Timer" type="Timer" parent="."]
+wait_time = 10.0
+one_shot = true
+autostart = true
+
 [connection signal="area_entered" from="." to="." method="OnAreaEnterd"]
+[connection signal="body_entered" from="." to="." method="_OnBodyEntered"]
 [connection signal="timeout" from="BulletParticles/Timer" to="BulletParticles" method="_on_timer_timeout"]
+[connection signal="timeout" from="Timer" to="." method="OnTimerTimeout"]

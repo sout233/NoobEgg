@@ -1,4 +1,6 @@
-[gd_scene load_steps=3 format=3 uid="uid://dy6dehim8ybh8"]
+[gd_scene load_steps=4 format=3 uid="uid://dy6dehim8ybh8"]
+
+[ext_resource type="Script" path="res://Scenes/Character/KilledParticles.cs" id="1_c2xlg"]
 
 [sub_resource type="Curve" id="Curve_f1qdw"]
 max_value = 100.0
@@ -31,3 +33,11 @@ damping_curve = SubResource("Curve_f1qdw")
 scale_amount_min = 5.0
 scale_amount_max = 15.0
 color_ramp = SubResource("Gradient_06jxh")
+script = ExtResource("1_c2xlg")
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 20.0
+one_shot = true
+autostart = true
+
+[connection signal="timeout" from="Timer" to="." method="OnTimerTimeout"]

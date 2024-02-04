@@ -58,6 +58,9 @@ public partial class Enemy : CharacterBody2D
     [Export]
     public AudioStreamPlayer2D AttackedSoundPlayer;
 
+    [Export]
+    public AnimatedSprite2D AnimatedSprite;
+
     private Vector2 _knockback = Vector2.Zero;
 
     // FUNC DOWN
@@ -72,6 +75,7 @@ public partial class Enemy : CharacterBody2D
         _knockback = NoobHelper.LerpV2(_knockback, Vector2.Zero, 0.1f);
         Velocity = (SceneNodes.CurrentPlayer.Position - Position).Normalized() * Speed + _knockback - Vector2.One * Weight;
         MoveAndSlide();
+        AnimatedSprite.FlipH = Velocity.X < 0;
     }
 
     public void Attacked(Attack attack)

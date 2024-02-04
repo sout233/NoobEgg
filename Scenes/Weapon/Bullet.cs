@@ -37,4 +37,14 @@ public partial class Bullet : Area2D
             QueueFree();
         }
     }
+
+    public void OnTimerTimeout()
+    {
+        QueueFree();
+    }
+
+    public void OnAreaEnterd(Node2D body)
+    {
+        QueueFree();
+    }
 }

@@ -58,13 +58,14 @@ colors = PackedColorArray(0.777822, 0.124764, 5.77569e-07, 1, 0.701961, 0, 0, 0)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_nnul0"]
 size = Vector2(75, 72)
 
-[node name="SwampMan" type="CharacterBody2D" node_paths=PackedStringArray("AttackedSoundPlayer")]
+[node name="SwampMan" type="CharacterBody2D" node_paths=PackedStringArray("AttackedSoundPlayer", "AnimatedSprite")]
 z_index = 3
 script = ExtResource("1_wqhdr")
 MaxHealth = 50.0
 Speed = 250.0
 AttackedParticles = ExtResource("2_jaxrj")
 AttackedSoundPlayer = NodePath("AudioStreamPlayer2D")
+AnimatedSprite = NodePath("AnimatedSprite2D")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 scale = Vector2(5, 5)

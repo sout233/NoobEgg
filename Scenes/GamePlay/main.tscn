@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://dg6f28sfgtb1a"]
+[gd_scene load_steps=15 format=3 uid="uid://dg6f28sfgtb1a"]
 
 [ext_resource type="PackedScene" uid="uid://oyii35mwntjp" path="res://Scenes/Character/Player/noob.tscn" id="4_43j1d"]
 [ext_resource type="Script" path="res://Scenes/GamePlay/GameManager.cs" id="6_h2c6i"]
@@ -6,7 +6,6 @@
 [ext_resource type="PackedScene" uid="uid://bd0qxtpah6ne5" path="res://Scenes/Items/spawner.tscn" id="7_nh5i5"]
 [ext_resource type="FontFile" uid="uid://b00xxyf3bb4wc" path="res://Archive/Resource/fonts/fusion-pixel-12px-proportional.otf" id="7_pigq4"]
 [ext_resource type="PackedScene" uid="uid://brpveq6q2cctx" path="res://Archive/Scenes/UI/aim_cursor.tscn" id="7_ywtjx"]
-[ext_resource type="PackedScene" uid="uid://urev5777u6s2" path="res://Scenes/Weapon/bullet.tscn" id="8_3civp"]
 [ext_resource type="Texture2D" uid="uid://ds8y4dmwktd3i" path="res://Archive/Resource/idk/bg.png" id="8_8hnxu"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_b2mlr"]
@@ -305,9 +304,6 @@ horizontal_alignment = 2
 layer = 3
 
 [node name="AimCursor" parent="TopLayer" instance=ExtResource("7_ywtjx")]
-
-[node name="Bullet" parent="." instance=ExtResource("8_3civp")]
-modulate = Color(22.024, 1, 1, 1)
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_qkjis")
