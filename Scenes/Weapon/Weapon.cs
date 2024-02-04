@@ -1,6 +1,5 @@
 using Godot;
 using NoobEgg.Gaming;
-using System;
 
 public partial class Weapon : Node2D
 {

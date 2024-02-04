@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace NoobEgg.Classes.Configs
+﻿namespace NoobEgg.Classes.Configs
 {
     public static class GameTimeConfig
     {
@@ -23,16 +17,15 @@ namespace NoobEgg.Classes.Configs
         /// </summary>
         public static bool Increment { get; set; } = true;
 
-
         public static int GetDayTime(int day)
         {
-            int time = FirstDayTime * day / 2;
+            int time = (int)(FirstDayTime * 60 * (day / 2f));
             return time;
         }
 
         public static int GetNightTime(int day)
         {
-            int time = FirstNightTime * day / 2;
+            int time = (int)(FirstNightTime * 60 * (day / 2f));
             return time;
         }
     }

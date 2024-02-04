@@ -5,7 +5,7 @@
     },
     "SoutDebug": {
       "commandName": "Executable",
-      "executablePath": "D:\\Godot\\Godot_4.2.x\\Godot_v4.2.1-stable_mono_win64.exe",
+      "executablePath": "E:\\Godot_v4.2.1-stable_mono_win64\\Godot_v4.2.1-stable_mono_win64.exe",
       "commandLineArgs": "--path . --verbose",
       "workingDirectory": "."
     }

@@ -1,6 +1,5 @@
 using Godot;
 using NoobEgg.Gaming;
-using System;
 
 public partial class Bullet : Area2D
 {
@@ -12,6 +11,7 @@ public partial class Bullet : Area2D
 
     public Vector2 AreaDirection { get; set; } = new Vector2(0, 0);
 
+    
     public override void _Ready()
     {
         GetNode<CpuParticles2D>("BulletParticles").Gravity = AreaDirection;
@@ -25,7 +25,7 @@ public partial class Bullet : Area2D
 
     public void OnAreaEnterd(Area2D area)
     {
-        if(area is HitBox)
+        if (area is HitBox)
         {
             var hitbox = area as HitBox;
             var enemy = hitbox.GetParent() as Enemy;

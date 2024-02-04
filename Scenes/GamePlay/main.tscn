@@ -230,12 +230,19 @@ glow_enabled = true
 
 [node name="Main" type="Node2D"]
 
-[node name="GameManager" type="Node" parent="." node_paths=PackedStringArray("SpawnTimer")]
+[node name="GameManager" type="Node" parent="." node_paths=PackedStringArray("SpawnTimer", "DayTimer", "HealthBar", "DamageScreenAnimationPlayer", "AmmorLabel")]
 script = ExtResource("6_h2c6i")
 SpawnTimer = NodePath("SpawnTimer")
+DayTimer = NodePath("DayTimer")
 Spawner = ExtResource("7_nh5i5")
+HealthBar = NodePath("../GameHUD/HealthBar")
+DamageScreenAnimationPlayer = NodePath("../GameHUD/DamageScreen/AnimationPlayer")
+AmmorLabel = NodePath("../GameHUD/AmmorLabel")
 
 [node name="SpawnTimer" type="Timer" parent="GameManager"]
+
+[node name="DayTimer" type="Timer" parent="GameManager"]
+autostart = true
 
 [node name="TileMap" type="TileMap" parent="."]
 scale = Vector2(6, 6)
@@ -309,3 +316,4 @@ layer = 3
 environment = SubResource("Environment_qkjis")
 
 [connection signal="timeout" from="GameManager/SpawnTimer" to="GameManager" method="EnemyGenerate"]
+[connection signal="timeout" from="GameManager/DayTimer" to="GameManager" method="TimeController"]

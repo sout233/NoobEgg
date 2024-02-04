@@ -1,5 +1,5 @@
-using Godot;
 using System;
+using Godot;
 
 namespace NoobEgg.Toolkit
 {
@@ -18,13 +18,14 @@ namespace NoobEgg.Toolkit
         public static float EnValue(float value)
         {
             float _newValue = -value * antiKey;
-            GD.Print($"已对变量加密：{_newValue}, 源值：{value}");
+            //GD.Print($"已对变量加密：{_newValue}, 源值：{value}");
             return _newValue;
         }
 
         public static float DeValue(float value)
         {
             float _newValue = -value / antiKey;
+            //GD.Print($"DeValue：{value}=>{_newValue}");
             return _newValue;
         }
     }

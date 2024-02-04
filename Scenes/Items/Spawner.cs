@@ -1,5 +1,5 @@
+﻿using System;
 using Godot;
-using System;
 
 public partial class Spawner : Marker2D
 {
@@ -15,7 +15,6 @@ public partial class Spawner : Marker2D
     public float MinInterval;
 
     public float MaxInterval;
-
 
     public override void _Ready()
     {

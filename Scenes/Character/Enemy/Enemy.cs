@@ -2,56 +2,9 @@ using Godot;
 using NoobEgg.Classes;
 using NoobEgg.GameProps;
 using NoobEgg.Gaming;
-using System;
 
-public partial class Enemy : CharacterBody2D
+public partial class Enemy : Character
 {
-    private float _health;
-    private float _damage = 10;
-    private float _maxHealth = 10;
-    private float _speed = 300;
-    private float _weight = 50;
-
-
-    public float Health
-    {
-        get { return _health; }
-        set
-        {
-            _health = value < 0 ? 0 : value;
-            _health = value > MaxHealth ? MaxHealth : value;
-        }
-    }
-
-    [Export]
-    public float Damage
-    {
-        get { return _damage; }
-        set { _damage = value; }
-    }
-
-    [Export]
-    public float MaxHealth
-    {
-        get { return _maxHealth; }
-        set { _maxHealth = value; }
-    }
-
-    [Export]
-    public float Speed
-    {
-        get { return _speed; }
-        set { _speed = value; }
-    }
-
-    [Export]
-    public float Weight
-    {
-        get { return _weight; }
-        set { _weight = value; }
-    }
-
-
     [Export]
     public PackedScene AttackedParticles;
 
@@ -67,7 +20,7 @@ public partial class Enemy : CharacterBody2D
 
     public override void _EnterTree()
     {
-        _health = MaxHealth;
+        Health = MaxHealth;
     }
 
     public override void _PhysicsProcess(double delta)

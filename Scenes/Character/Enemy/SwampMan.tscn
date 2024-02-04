@@ -61,11 +61,13 @@ size = Vector2(75, 72)
 [node name="SwampMan" type="CharacterBody2D" node_paths=PackedStringArray("AttackedSoundPlayer", "AnimatedSprite")]
 z_index = 3
 script = ExtResource("1_wqhdr")
-MaxHealth = 50.0
-Speed = 250.0
 AttackedParticles = ExtResource("2_jaxrj")
 AttackedSoundPlayer = NodePath("AudioStreamPlayer2D")
 AnimatedSprite = NodePath("AnimatedSprite2D")
+Damage = 5.0
+MaxHealth = 50.0
+Speed = 250.0
+Weight = 30.0
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 scale = Vector2(5, 5)

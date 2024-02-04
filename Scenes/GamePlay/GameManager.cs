@@ -1,5 +1,7 @@
+﻿using System;
 using Godot;
-using System;
+using NoobEgg.Classes.Configs;
+using NoobEgg.Classes.Gaming;
 using NoobEgg.GameProps;
 
 public partial class GameManager : Node
@@ -8,10 +10,28 @@ public partial class GameManager : Node
     public Timer SpawnTimer;
 
     [Export]
+    public Timer DayTimer;
+
+    [Export]
     public PackedScene Spawner;
+
+    [Export]
+    public ProgressBar HealthBar;
+
+    [Export]
+    public AnimationPlayer DamageScreenAnimationPlayer;
+
+    [Export]
+    public Label AmmorLabel;
+
+    private int _day = 1;
 
     public override void _Ready()
     {
+        UIController.HealthBar = HealthBar;
+        UIController.DamageScreenAnimationPlayer = DamageScreenAnimationPlayer;
+        UIController.AmmorLabel = AmmorLabel;
+
         SceneNodes.CurrentPlayer = GetCurrentPlayer();
         SceneNodes.CurrentTileMap = GetParent().GetNode<TileMap>("TileMap");
 
@@ -51,5 +71,12 @@ public partial class GameManager : Node
 
         SpawnTimer.WaitTime = random.Next(1, 5);
         SpawnTimer.Start();
+    }
+
+    public void TimeController()
+    {
+        DayTimer.WaitTime = GameTimeConfig.GetDayTime(_day);
+        GD.Print($"第{_day}天, Timer:{GameTimeConfig.GetDayTime(_day)}");
+        _day++;
     }
 }

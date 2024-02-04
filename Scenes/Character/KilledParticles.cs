@@ -1,5 +1,4 @@
-using Godot;
-using System;
+﻿using Godot;
 
 public partial class KilledParticles : CpuParticles2D
 {

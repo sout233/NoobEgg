@@ -104,6 +104,10 @@ FighterBody = NodePath("FighterBody")
 FighterLeftHand = NodePath("FighterLeftHand")
 FighterRightHand = NodePath("FighterRightHand")
 Bullet = ExtResource("2_xyjxj")
+Damage = 30.0
+MaxHealth = 100.0
+Speed = 250.0
+Weight = 50.0
 
 [node name="FighterBody" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_egmjj")
