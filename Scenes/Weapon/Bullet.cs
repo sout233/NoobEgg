@@ -11,7 +11,7 @@ public partial class Bullet : Area2D
 
     public Vector2 AreaDirection { get; set; } = new Vector2(0, 0);
 
-    
+
     public override void _Ready()
     {
         GetNode<CpuParticles2D>("BulletParticles").Gravity = AreaDirection;

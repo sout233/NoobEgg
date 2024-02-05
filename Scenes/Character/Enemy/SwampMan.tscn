@@ -65,7 +65,7 @@ AttackedParticles = ExtResource("2_jaxrj")
 AttackedSoundPlayer = NodePath("AudioStreamPlayer2D")
 AnimatedSprite = NodePath("AnimatedSprite2D")
 Damage = 5.0
-MaxHealth = 50.0
+MaxHealth = 30.0
 Speed = 250.0
 Weight = 30.0
 
@@ -118,3 +118,5 @@ script = ExtResource("5_de080")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HitBox"]
 position = Vector2(1.5, 8)
 shape = SubResource("RectangleShape2D_nnul0")
+
+[connection signal="body_entered" from="HitBox" to="." method="Attack"]

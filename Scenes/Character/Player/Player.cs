@@ -1,4 +1,9 @@
 ﻿using Godot;
+using NoobEgg.Classes;
+using NoobEgg.Classes.Gaming;
+using NoobEgg.Gaming;
+using NoobEgg.Toolkit;
+using System.Security.AccessControl;
 
 public partial class Player : Character
 {
@@ -9,17 +14,34 @@ public partial class Player : Character
     [Export] public Sprite2D FighterLeftHand;
     [Export] public Sprite2D FighterRightHand;
     [Export] public PackedScene Bullet;
+    [Export] public PackedScene AttackedParticles;
+    [Export] public AudioStreamPlayer2D AttackedSoundPlayer;
 
     public Weapon Wp01;
 
-    private double _shootTimer = 0;
-    private double _shootRate = 0.1f;
+    private int _ammor;
+    private Vector2 _knockback = Vector2.Zero;
+
+
+    public int Ammor
+    {
+        get { return NoobAntiCheat.DeValue(_ammor); }
+        set => _ammor = value > 0 ? NoobAntiCheat.EnValue(value) : 0;
+    }
+
+    public override void _EnterTree()
+    {
+        UIController.AmmorLabel.Text = Ammor.ToString();
+        UIController.HealthBar.Value = Health;
+    }
+
 
     #region 常规角色方法
 
     protected void Move()
     {
         Vector2 velocity = Velocity;
+        _knockback = NoobHelper.LerpV2(_knockback, Vector2.Zero, 0.1f);
 
         float dirX = Input.GetAxis("Left", "Right");
         float dirY = Input.GetAxis("Up", "Down");
@@ -27,13 +49,35 @@ public partial class Player : Character
         velocity.X = dirX * Speed;
         velocity.Y = dirY * Speed;
 
-        Velocity = velocity;
+        Velocity = velocity + _knockback;
         MoveAndSlide();
+    }
+
+    public void Attacked(Attack attack)
+    {
+        _knockback = Vector2.Zero;
+        var attackedParticles = AttackedParticles.Instantiate<CpuParticles2D>();
+        attackedParticles.Gravity = attack.StartDirection * 100;
+        attackedParticles.Emitting = true;
+        attackedParticles.Position = Position;
+        AddSibling(attackedParticles);
+
+        AttackedSoundPlayer.Play();
+
+        Health -= attack.Damage;
+        UIController.HealthBar.Value = Health;
+
+        _knockback = attack.StartDirection * attack.KnockBackForce;
+
+        if (Health <= 0)
+        {
+            //Die();
+        }
     }
 
     protected void PlayAnimation()
     {
-        if (Velocity != Vector2.Zero)
+        if (Velocity - _knockback != Vector2.Zero)
         {
             FighterBody.Play("Idle");
         }
@@ -74,28 +118,6 @@ public partial class Player : Character
     protected void WeaponFollow()
     {
         Wp01.LookAt(GetGlobalMousePosition());
-    }
-
-    protected void Shoot(double delta)
-    {
-        _shootTimer += delta;
-
-        if (Input.GetActionRawStrength("Shoot") > 0 && _shootTimer >= _shootRate)
-        {
-            var _bullet = Bullet.Instantiate<Area2D>() as Bullet;
-
-            _bullet.GlobalPosition = Wp01.GetNode<Marker2D>("MuzzleMarker").GlobalPosition;
-            _bullet.AreaDirection = (GetGlobalMousePosition() - GlobalPosition).Normalized();
-            _bullet.Attack = Wp01.Attack;
-
-            AddSibling(_bullet);
-
-            _shootTimer = 0;
-        }
-        else
-        {
-            Camera.Set("offset", new Vector2(0, 0));
-        }
     }
 
     #endregion 常规角色方法

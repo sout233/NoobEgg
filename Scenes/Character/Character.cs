@@ -1,22 +1,23 @@
 ﻿using Godot;
+using NoobEgg.Classes;
 using NoobEgg.Toolkit;
 
 public partial class Character : CharacterBody2D
 {
     private float _health;
-    private float _damage = 10;
-    private float _maxHealth = 10;
-    private float _speed = 300;
-    private float _weight = 50;
+    private float _damage;
+    private float _maxHealth;
+    private float _speed;
+    private float _weight;
+
 
     public float Health
     {
         get { return NoobAntiCheat.DeValue(_health); }
         set
         {
-            _health = value < 0 ? 0 : value;
-            _health = value > MaxHealth ? MaxHealth : value;
-            _health = NoobAntiCheat.EnValue(_health);
+            var _preHealth = NoobHelper.Clamp(value, 0, MaxHealth);
+            _health = NoobAntiCheat.EnValue(_preHealth);
         }
     }
 

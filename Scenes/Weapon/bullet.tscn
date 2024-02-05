@@ -19,6 +19,7 @@ radius = 7.07107
 colors = PackedColorArray(1, 1, 0.25098, 1, 0, 0, 0, 0)
 
 [node name="Bullet" type="Area2D" node_paths=PackedStringArray("BulletSoundPlayer")]
+z_index = 4
 script = ExtResource("1_mvfvf")
 BulletSoundPlayer = NodePath("BulletSoundPlayer")
 

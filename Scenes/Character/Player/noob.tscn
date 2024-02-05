@@ -1,11 +1,13 @@
-[gd_scene load_steps=14 format=3 uid="uid://oyii35mwntjp"]
+[gd_scene load_steps=16 format=3 uid="uid://oyii35mwntjp"]
 
 [ext_resource type="Script" path="res://Scenes/Character/Player/Noob.cs" id="1_3wpkt"]
 [ext_resource type="Texture2D" uid="uid://c4gxlgtwilaec" path="res://Resources/Images/fighter_hand.png" id="1_pu0jy"]
 [ext_resource type="Texture2D" uid="uid://clc3aqekwuvsg" path="res://Resources/Images/fighter_body_ani.png" id="2_h4831"]
 [ext_resource type="PackedScene" uid="uid://urev5777u6s2" path="res://Scenes/Weapon/bullet.tscn" id="2_xyjxj"]
+[ext_resource type="PackedScene" uid="uid://dy6dehim8ybh8" path="res://Scenes/Character/killed_particles.tscn" id="3_o5l07"]
 [ext_resource type="Script" path="res://Archive/Scenes/Character/Player/PlayerCamera.gd" id="4_v2jdl"]
 [ext_resource type="PackedScene" uid="uid://bdbmffyne6x7v" path="res://Scenes/Weapon/wp_01.tscn" id="5_frqhh"]
+[ext_resource type="AudioStream" uid="uid://bmknwrhcrowkl" path="res://Archive/Resource/audio/hit.ogg" id="7_vw1f8"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_m5ts4"]
 atlas = ExtResource("2_h4831")
@@ -93,7 +95,7 @@ _data = {
 [sub_resource type="CircleShape2D" id="CircleShape2D_au02s"]
 radius = 8.2
 
-[node name="Noob" type="CharacterBody2D" node_paths=PackedStringArray("Camera", "CameraAnchor", "WeaponStack", "FighterBody", "FighterLeftHand", "FighterRightHand") groups=["Player"]]
+[node name="Noob" type="CharacterBody2D" node_paths=PackedStringArray("Camera", "CameraAnchor", "WeaponStack", "FighterBody", "FighterLeftHand", "FighterRightHand", "AttackedSoundPlayer") groups=["Player"]]
 z_index = 3
 scale = Vector2(5, 5)
 script = ExtResource("1_3wpkt")
@@ -104,6 +106,8 @@ FighterBody = NodePath("FighterBody")
 FighterLeftHand = NodePath("FighterLeftHand")
 FighterRightHand = NodePath("FighterRightHand")
 Bullet = ExtResource("2_xyjxj")
+AttackedParticles = ExtResource("3_o5l07")
+AttackedSoundPlayer = NodePath("AudioStreamPlayer2D")
 Damage = 30.0
 MaxHealth = 100.0
 Speed = 250.0
@@ -142,3 +146,6 @@ scale = Vector2(5, 5)
 zoom = Vector2(0.7, 0.7)
 position_smoothing_enabled = true
 script = ExtResource("4_v2jdl")
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("7_vw1f8")

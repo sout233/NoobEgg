@@ -1,8 +1,8 @@
-﻿using System;
-using Godot;
+﻿using Godot;
 using NoobEgg.Classes.Configs;
 using NoobEgg.Classes.Gaming;
 using NoobEgg.GameProps;
+using System;
 
 public partial class GameManager : Node
 {

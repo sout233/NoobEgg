@@ -1,5 +1,5 @@
-﻿using System;
-using Godot;
+﻿using Godot;
+using System;
 
 public partial class Spawner : Marker2D
 {

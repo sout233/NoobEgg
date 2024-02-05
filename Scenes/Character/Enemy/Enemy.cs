@@ -17,17 +17,12 @@ public partial class Enemy : Character
     private Vector2 _knockback = Vector2.Zero;
 
     // FUNC DOWN
-
-    public override void _EnterTree()
-    {
-        Health = MaxHealth;
-    }
-
     public override void _PhysicsProcess(double delta)
     {
         _knockback = NoobHelper.LerpV2(_knockback, Vector2.Zero, 0.1f);
         Velocity = (SceneNodes.CurrentPlayer.Position - Position).Normalized() * Speed + _knockback - Vector2.One * Weight;
         MoveAndSlide();
+
         AnimatedSprite.FlipH = Velocity.X < 0;
     }
 

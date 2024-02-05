@@ -15,5 +15,13 @@ namespace NoobEgg.Classes
             float retY = LerpF(firstVector.Y, secondVector.Y, by);
             return new Vector2(retX, retY);
         }
+        public static int Clamp(int value, int min, int max)
+        {
+            return (value < min) ? min : (value > max) ? max : value;
+        }
+        public static float Clamp(float value, float min, float max)
+        {
+            return (value < min) ? min : (value > max) ? max : value;
+        }
     }
 }

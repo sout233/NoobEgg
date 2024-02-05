@@ -1,11 +1,15 @@
-[gd_scene load_steps=3 format=3 uid="uid://bdbmffyne6x7v"]
+[gd_scene load_steps=5 format=3 uid="uid://bdbmffyne6x7v"]
 
 [ext_resource type="Texture2D" uid="uid://q5tleenepw88" path="res://Archive/Resource/images/wp01.png" id="1_ay5pl"]
 [ext_resource type="Script" path="res://Scenes/Weapon/WeaponGun.cs" id="1_h5je4"]
+[ext_resource type="PackedScene" uid="uid://urev5777u6s2" path="res://Scenes/Weapon/bullet.tscn" id="2_tfm6q"]
+[ext_resource type="AudioStream" uid="uid://wpebrq51jn6q" path="res://Archive/Resource/audio/no_ammor.ogg" id="3_px1wk"]
 
-[node name="WP01" type="Node2D"]
+[node name="WP01" type="Node2D" node_paths=PackedStringArray("Audio")]
 script = ExtResource("1_h5je4")
 KnockBackForce = 200.0
+Audio = NodePath("AudioStreamPlayer2D")
+Bullet = ExtResource("2_tfm6q")
 
 [node name="Wp01" type="Sprite2D" parent="."]
 scale = Vector2(0.8, 0.8)
@@ -19,3 +23,6 @@ position = Vector2(-4, 1)
 
 [node name="RightHandMarker" type="Marker2D" parent="."]
 position = Vector2(5, 0)
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_px1wk")
