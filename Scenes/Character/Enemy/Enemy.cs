@@ -1,9 +1,10 @@
 using Godot;
 using NoobEgg.Classes;
-using NoobEgg.GameProps;
 using NoobEgg.Gaming;
 
-public partial class Enemy : Character
+namespace NoobEgg.Scenes.Character.Enemy;
+
+public partial class Enemy : global::NoobEgg.Scenes.Character.Character
 {
     [Export]
     public PackedScene AttackedParticles;

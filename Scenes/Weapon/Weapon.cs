@@ -2,9 +2,11 @@ using Godot;
 using NoobEgg.Classes.Gaming;
 using NoobEgg.Gaming;
 
+namespace NoobEgg.Scenes.Weapon;
+
 public partial class Weapon : Node2D
 {
-    public Attack Attack = new();
+    private readonly Attack _attack = new();
 
     [Export] public float Damage = 10;
 
@@ -14,37 +16,37 @@ public partial class Weapon : Node2D
 
     [Export] public PackedScene Bullet;
 
-    private Player _player;
+    private NoobEgg.Scenes.Character.Player.Player _player;
     private double _shootTimer = 0;
     private double _shootRate = 0.1f;
 
     public override void _EnterTree()
     {
-        Attack.Damage = Damage;
-        Attack.KnockBackForce = KnockBackForce;
-        _player = GetParent().GetParent<Player>();
+        _attack.Damage = Damage;
+        _attack.KnockBackForce = KnockBackForce;
+        _player = GetParent().GetParent<NoobEgg.Scenes.Character.Player.Player>();
     }
 
     public void Shoot(double delta)
     {
         _shootTimer += delta;
 
-        if (Input.GetActionRawStrength("Shoot") > 0 && _shootTimer >= _shootRate && _player.Ammor > 0)
+        if (Input.GetActionRawStrength("Shoot") > 0 && _shootTimer >= _shootRate && _player.Ammo > 0)
         {
-            var _bullet = Bullet.Instantiate<Area2D>() as Bullet;
+            var bullet = Bullet.Instantiate<Area2D>() as NoobEgg.Scenes.Weapon.Bullet;
 
-            _bullet.GlobalPosition = GetNode<Marker2D>("MuzzleMarker").GlobalPosition;
-            _bullet.AreaDirection = (GetGlobalMousePosition() - GlobalPosition).Normalized();
-            _bullet.Attack = Attack;
+            bullet.GlobalPosition = GetNode<Marker2D>("MuzzleMarker").GlobalPosition;
+            bullet.AreaDirection = (GetGlobalMousePosition() - GlobalPosition).Normalized();
+            bullet.Attack = _attack;
 
-            _player.AddSibling(_bullet);
+            _player.AddSibling(bullet);
 
-            _player.Ammor--;
-            UIController.AmmorLabel.Text = _player.Ammor.ToString();
+            _player.Ammo--;
+            UiController.AmmoLabel.Text = _player.Ammo.ToString();
 
             _shootTimer = 0;
         }
-        else if (Input.GetActionRawStrength("Shoot") > 0 && _shootTimer >= _shootRate && _player.Ammor <= 0)
+        else if (Input.GetActionRawStrength("Shoot") > 0 && _shootTimer >= _shootRate && _player.Ammo <= 0)
         {
             Audio.Play();
             _shootTimer = 0;

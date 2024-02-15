@@ -1,8 +1,10 @@
-﻿using Godot;
+﻿using System;
+using Godot;
+using NoobEgg.Classes;
 using NoobEgg.Classes.Configs;
 using NoobEgg.Classes.Gaming;
-using NoobEgg.GameProps;
-using System;
+
+namespace NoobEgg.Scenes.GamePlay;
 
 public partial class GameManager : Node
 {
@@ -28,9 +30,9 @@ public partial class GameManager : Node
 
     public override void _Ready()
     {
-        UIController.HealthBar = HealthBar;
-        UIController.DamageScreenAnimationPlayer = DamageScreenAnimationPlayer;
-        UIController.AmmorLabel = AmmorLabel;
+        UiController.HealthBar = HealthBar;
+        UiController.DamageScreenAnimationPlayer = DamageScreenAnimationPlayer;
+        UiController.AmmoLabel = AmmorLabel;
 
         SceneNodes.CurrentPlayer = GetCurrentPlayer();
         SceneNodes.CurrentTileMap = GetParent().GetNode<TileMap>("TileMap");
@@ -39,16 +41,16 @@ public partial class GameManager : Node
         SpawnTimer.Start();
     }
 
-    public Player GetCurrentPlayer()
+    public Character.Player.Player GetCurrentPlayer()
     {
         Godot.Collections.Array<Node> children = GetTree().CurrentScene.GetChildren();
-        Player player = null;
+        Character.Player.Player player = null;
 
         foreach (Node child in children)
         {
-            if (child is Player)
+            if (child is Character.Player.Player)
             {
-                player = (Player)child;
+                player = (Character.Player.Player)child;
             }
         }
         return player;
@@ -57,7 +59,7 @@ public partial class GameManager : Node
     public void EnemyGenerate()
     {
         Random random = new Random();
-        var spawner = Spawner.Instantiate<Spawner>();
+        var spawner = Spawner.Instantiate<Items.Spawner>();
 
         var used = SceneNodes.CurrentTileMap.GetUsedRect();
         var tileSize = SceneNodes.CurrentTileMap.TileSet.TileSize * 6;

@@ -1,5 +1,7 @@
-﻿using Godot;
-using System;
+﻿using System;
+using Godot;
+
+namespace NoobEgg.Scenes.Items;
 
 public partial class Spawner : Marker2D
 {
@@ -29,7 +31,7 @@ public partial class Spawner : Marker2D
         Random random = new Random();
         AnimationPlayer.Play("spawn");
 
-        var enemy = Enemy.Instantiate<Enemy>();
+        var enemy = Enemy.Instantiate<NoobEgg.Scenes.Character.Enemy.Enemy>();
         enemy.GlobalPosition = GlobalPosition + new Vector2(random.Next(-2, 2), random.Next(-2, 2));
         GetTree().CurrentScene.AddChild(enemy);
 

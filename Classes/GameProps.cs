@@ -1,10 +1,10 @@
 ﻿using Godot;
 
-namespace NoobEgg.GameProps
+namespace NoobEgg.Classes
 {
     public static class SceneNodes
     {
-        public static Player CurrentPlayer { get; set; }
+        public static Scenes.Character.Player.Player CurrentPlayer { get; set; }
         public static TileMap CurrentTileMap { get; set; }
     }
 }

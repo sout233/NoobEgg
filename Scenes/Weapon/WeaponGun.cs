@@ -1,14 +1,16 @@
 using Godot;
 
-public partial class WeaponGun : Weapon
+namespace NoobEgg.Scenes.Weapon;
+
+public partial class WeaponGun : NoobEgg.Scenes.Weapon.Weapon
 {
-    [Export] public int TotalAmmor = 100;
-    [Export] public int MaxAmmor = 10;
-    private int _magAmmor;
+    [Export] public int TotalAmmo = 100;
+    [Export] public int MaxAmmo = 10;
+    private int _magAmmo;
 
     public override void _Ready()
     {
-        _magAmmor = MaxAmmor;
-        TotalAmmor -= MaxAmmor;
+        _magAmmo = MaxAmmo;
+        TotalAmmo -= MaxAmmo;
     }
 }
