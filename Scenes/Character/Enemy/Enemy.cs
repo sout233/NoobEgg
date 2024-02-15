@@ -1,6 +1,7 @@
 using Godot;
 using NoobEgg.Classes;
 using NoobEgg.Gaming;
+using NoobEgg.Scenes.GamePlay;
 
 namespace NoobEgg.Scenes.Character.Enemy;
 
@@ -48,11 +49,11 @@ public partial class Enemy : global::NoobEgg.Scenes.Character.Character
         }
     }
 
-    public void Die()
+    private void Die()
     {
-        GD.Print("die");
         AttackedSoundPlayer.Reparent(GetParent().GetParent());
-
+        GameStatus.CurrentScore += 2;
+        
         QueueFree();
     }
 }

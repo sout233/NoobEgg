@@ -3,65 +3,78 @@ using Godot;
 using NoobEgg.Classes;
 using NoobEgg.Classes.Configs;
 using NoobEgg.Classes.Gaming;
+using Range = Godot.Range;
 
 namespace NoobEgg.Scenes.GamePlay;
 
 public partial class GameManager : Node
 {
-    [Export]
-    public Timer SpawnTimer;
+    [Export] public Timer SpawnTimer;
 
-    [Export]
-    public Timer DayTimer;
+    [Export] public PackedScene Spawner;
 
-    [Export]
-    public PackedScene Spawner;
+    [Export] public ProgressBar HealthBar;
 
-    [Export]
-    public ProgressBar HealthBar;
+    [Export] public AnimationPlayer DamageScreenAnimationPlayer;
 
-    [Export]
-    public AnimationPlayer DamageScreenAnimationPlayer;
+    [Export] public Label AmmoLabel;
 
-    [Export]
-    public Label AmmorLabel;
+    [Export] public ProgressBar ScoreBar;
 
     private int _day = 1;
+
 
     public override void _Ready()
     {
         UiController.HealthBar = HealthBar;
         UiController.DamageScreenAnimationPlayer = DamageScreenAnimationPlayer;
-        UiController.AmmoLabel = AmmorLabel;
+        UiController.AmmoLabel = AmmoLabel;
+        UiController.ScoreBar = ScoreBar;
+
+        ScoreBar.ValueChanged += OnValueChange;
 
         SceneNodes.CurrentPlayer = GetCurrentPlayer();
         SceneNodes.CurrentTileMap = GetParent().GetNode<TileMap>("TileMap");
 
         SpawnTimer.OneShot = true;
         SpawnTimer.Start();
+
+        GameStatus.AimScore = GameScoreConfig.GetAimScoreByDay(_day);
     }
 
-    public Character.Player.Player GetCurrentPlayer()
+    private void OnValueChange(double value)
     {
-        Godot.Collections.Array<Node> children = GetTree().CurrentScene.GetChildren();
+        if (!(Math.Abs(value - ScoreBar.MaxValue) < 1)) return;
+        GD.Print("Day Passed");
+        _day++;
+        GameStatus.CurrentScore = 0;
+        GameStatus.AimScore = GameScoreConfig.GetAimScoreByDay(_day);
+    }
+
+
+    private Character.Player.Player GetCurrentPlayer()
+    {
+        var children = GetTree().CurrentScene.GetChildren();
         Character.Player.Player player = null;
 
-        foreach (Node child in children)
+        foreach (var child in children)
         {
-            if (child is Character.Player.Player)
+            if (child is Character.Player.Player child1)
             {
-                player = (Character.Player.Player)child;
+                player = child1;
             }
         }
+
         return player;
     }
 
-    public void EnemyGenerate()
+    private void EnemyGenerate()
     {
-        Random random = new Random();
+        var random = new Random();
         var spawner = Spawner.Instantiate<Items.Spawner>();
 
-        var used = SceneNodes.CurrentTileMap.GetUsedRect();
+        // var used = SceneNodes.CurrentTileMap.GetUsedRect();
+        var used = new Rect2I(new(-1, -1), new(27, 22));
         var tileSize = SceneNodes.CurrentTileMap.TileSet.TileSize * 6;
         var tileLeftX = used.Position.X * tileSize.X + tileSize.X;
         var tileRightX = used.End.X * tileSize.X - tileSize.X;
@@ -71,14 +84,7 @@ public partial class GameManager : Node
         spawner.Position = new Vector2(random.Next(tileLeftX, tileRightX), random.Next(tileTopY, tileBottomY));
         GetTree().CurrentScene.AddSibling(spawner);
 
-        SpawnTimer.WaitTime = random.Next(1, 5);
+        SpawnTimer.WaitTime = random.NextDouble()*GameScoreConfig.GetWaitTimeByDay(_day);
         SpawnTimer.Start();
-    }
-
-    public void TimeController()
-    {
-        DayTimer.WaitTime = GameTimeConfig.GetDayTime(_day);
-        GD.Print($"第{_day}天, Timer:{GameTimeConfig.GetDayTime(_day)}");
-        _day++;
     }
 }

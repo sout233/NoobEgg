@@ -16,15 +16,15 @@ public partial class Weapon : Node2D
 
     [Export] public PackedScene Bullet;
 
-    private NoobEgg.Scenes.Character.Player.Player _player;
-    private double _shootTimer = 0;
+    private Character.Player.Player _player;
+    private double _shootTimer;
     private double _shootRate = 0.1f;
 
     public override void _EnterTree()
     {
         _attack.Damage = Damage;
         _attack.KnockBackForce = KnockBackForce;
-        _player = GetParent().GetParent<NoobEgg.Scenes.Character.Player.Player>();
+        _player = GetParent().GetParent<Character.Player.Player>();
     }
 
     public void Shoot(double delta)
@@ -33,13 +33,14 @@ public partial class Weapon : Node2D
 
         if (Input.GetActionRawStrength("Shoot") > 0 && _shootTimer >= _shootRate && _player.Ammo > 0)
         {
-            var bullet = Bullet.Instantiate<Area2D>() as NoobEgg.Scenes.Weapon.Bullet;
+            if (Bullet.Instantiate<Area2D>() is Bullet bullet)
+            {
+                bullet.GlobalPosition = GetNode<Marker2D>("MuzzleMarker").GlobalPosition;
+                bullet.AreaDirection = (GetGlobalMousePosition() - GlobalPosition).Normalized();
+                bullet.Attack = _attack;
 
-            bullet.GlobalPosition = GetNode<Marker2D>("MuzzleMarker").GlobalPosition;
-            bullet.AreaDirection = (GetGlobalMousePosition() - GlobalPosition).Normalized();
-            bullet.Attack = _attack;
-
-            _player.AddSibling(bullet);
+                _player.AddSibling(bullet);
+            }
 
             _player.Ammo--;
             UiController.AmmoLabel.Text = _player.Ammo.ToString();

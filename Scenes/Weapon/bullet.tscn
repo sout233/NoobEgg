@@ -32,7 +32,7 @@ texture = SubResource("GradientTexture1D_wfif3")
 shape = SubResource("CircleShape2D_p832v")
 
 [node name="BulletParticles" type="CPUParticles2D" parent="."]
-modulate = Color(4, 1, 1, 1)
+modulate = Color(2, 1, 1, 1)
 amount = 50
 speed_scale = 19.22
 lifetime_randomness = 0.5
