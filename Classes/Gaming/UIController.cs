@@ -10,6 +10,7 @@ namespace NoobEgg.Classes.Gaming
 
         public static Label AmmoLabel { get; set; }
 
-        public static TextureRect DamageScreen { get; set; }
+        
+        public static ProgressBar ScoreBar { get; set; }
     }
 }

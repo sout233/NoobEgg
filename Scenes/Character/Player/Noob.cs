@@ -1,5 +1,4 @@
 ﻿using Godot;
-using NoobEgg.Scenes.Weapon;
 
 namespace NoobEgg.Scenes.Character.Player;
 
@@ -15,7 +14,7 @@ public partial class Noob : Player
         _weapon = Wp01;
 
         Speed = 700f;
-        Ammo = 30;
+        Ammo = 114514;
         Health = MaxHealth;
     }
 

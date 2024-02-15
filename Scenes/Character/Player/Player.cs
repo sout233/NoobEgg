@@ -1,11 +1,13 @@
-﻿using Godot;
+﻿using System.Threading;
+using System.Threading.Tasks;
+using Godot;
 using NoobEgg.Classes;
 using NoobEgg.Classes.Gaming;
 using NoobEgg.Gaming;
 
 namespace NoobEgg.Scenes.Character.Player;
 
-public partial class Player : NoobEgg.Scenes.Character.Character
+public partial class Player : Character
 {
     [Export] public Camera2D Camera;
     [Export] public Node2D CameraAnchor;
@@ -29,9 +31,10 @@ public partial class Player : NoobEgg.Scenes.Character.Character
         set => _ammo = value > 0 ? NoobAntiCheat.EnValue(value) : 0;
     }
 
-    public override void _EnterTree()
+    public override async void _EnterTree()
     {
-        UiController.AmmoLabel.Text = Ammo.ToString();
+        await Task.Delay(100);
+        // UiController.AmmoLabel.Text = Ammo.ToString();
         UiController.HealthBar.Value = Health;
     }
 
@@ -66,6 +69,7 @@ public partial class Player : NoobEgg.Scenes.Character.Character
 
         Health -= attack.Damage;
         UiController.HealthBar.Value = Health;
+        UiController.DamageScreenAnimationPlayer.Play("damage_screen");
 
         _knockback = attack.StartDirection * attack.KnockBackForce;
 
