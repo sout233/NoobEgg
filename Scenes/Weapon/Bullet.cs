@@ -1,6 +1,8 @@
 using Godot;
 using NoobEgg.Gaming;
 
+namespace NoobEgg.Scenes.Weapon;
+
 public partial class Bullet : Area2D
 {
     [Export] public AudioStreamPlayer2D BulletSoundPlayer;
@@ -25,10 +27,10 @@ public partial class Bullet : Area2D
 
     public void OnAreaEnterd(Area2D area)
     {
-        if (area is HitBox)
+        if (area is NoobEgg.Scenes.Character.Enemy.HitBox)
         {
-            var hitbox = area as HitBox;
-            var enemy = hitbox.GetParent() as Enemy;
+            var hitbox = area as NoobEgg.Scenes.Character.Enemy.HitBox;
+            var enemy = hitbox.GetParent() as NoobEgg.Scenes.Character.Enemy.Enemy;
 
             Attack.StartDirection = (GetGlobalMousePosition() - GlobalPosition).Normalized();
 

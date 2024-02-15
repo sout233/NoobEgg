@@ -1,5 +1,7 @@
 using Godot;
 
+namespace NoobEgg.Scenes.Character.Enemy;
+
 public partial class HitBox : Area2D
 {
     public Node2D Parent;

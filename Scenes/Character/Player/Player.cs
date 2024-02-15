@@ -2,10 +2,10 @@
 using NoobEgg.Classes;
 using NoobEgg.Classes.Gaming;
 using NoobEgg.Gaming;
-using NoobEgg.Toolkit;
-using System.Security.AccessControl;
 
-public partial class Player : Character
+namespace NoobEgg.Scenes.Character.Player;
+
+public partial class Player : NoobEgg.Scenes.Character.Character
 {
     [Export] public Camera2D Camera;
     [Export] public Node2D CameraAnchor;
@@ -17,22 +17,22 @@ public partial class Player : Character
     [Export] public PackedScene AttackedParticles;
     [Export] public AudioStreamPlayer2D AttackedSoundPlayer;
 
-    public Weapon Wp01;
+    protected Weapon.Weapon Wp01;
 
-    private int _ammor;
+    private int _ammo;
     private Vector2 _knockback = Vector2.Zero;
 
 
-    public int Ammor
+    public int Ammo
     {
-        get { return NoobAntiCheat.DeValue(_ammor); }
-        set => _ammor = value > 0 ? NoobAntiCheat.EnValue(value) : 0;
+        get => NoobAntiCheat.DeValue(_ammo);
+        set => _ammo = value > 0 ? NoobAntiCheat.EnValue(value) : 0;
     }
 
     public override void _EnterTree()
     {
-        UIController.AmmorLabel.Text = Ammor.ToString();
-        UIController.HealthBar.Value = Health;
+        UiController.AmmoLabel.Text = Ammo.ToString();
+        UiController.HealthBar.Value = Health;
     }
 
 
@@ -40,11 +40,11 @@ public partial class Player : Character
 
     protected void Move()
     {
-        Vector2 velocity = Velocity;
+        var velocity = Velocity;
         _knockback = NoobHelper.LerpV2(_knockback, Vector2.Zero, 0.1f);
 
-        float dirX = Input.GetAxis("Left", "Right");
-        float dirY = Input.GetAxis("Up", "Down");
+        var dirX = Input.GetAxis("Left", "Right");
+        var dirY = Input.GetAxis("Up", "Down");
 
         velocity.X = dirX * Speed;
         velocity.Y = dirY * Speed;
@@ -65,7 +65,7 @@ public partial class Player : Character
         AttackedSoundPlayer.Play();
 
         Health -= attack.Damage;
-        UIController.HealthBar.Value = Health;
+        UiController.HealthBar.Value = Health;
 
         _knockback = attack.StartDirection * attack.KnockBackForce;
 

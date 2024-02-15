@@ -1,6 +1,4 @@
-﻿using NoobEgg.Toolkit;
-
-namespace NoobEgg.Classes
+﻿namespace NoobEgg.Classes
 {
     internal class Test
     {

@@ -1,7 +1,7 @@
-using Godot;
 using System;
+using Godot;
 
-namespace NoobEgg.Toolkit
+namespace NoobEgg.Classes
 {
     public static class NoobAntiCheat
     {
