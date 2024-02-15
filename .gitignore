@@ -16,3 +16,5 @@ mono_crash.*.json
 
 *.tmp
 .vs/
+.rc/
+.idea/
