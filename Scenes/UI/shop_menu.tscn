@@ -1,0 +1,84 @@
+[gd_scene load_steps=5 format=3 uid="uid://b3jo4xbia802f"]
+
+[ext_resource type="Script" path="res://Scenes/UI/ShopMenu.cs" id="1_3vo3i"]
+[ext_resource type="FontFile" uid="uid://b00xxyf3bb4wc" path="res://Archive/Resource/fonts/fusion-pixel-12px-proportional.otf" id="2_u6qkv"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_iemrp"]
+bg_color = Color(0.686275, 0.376471, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_2iv36"]
+font_size = 25
+
+[node name="ShopMenu" type="Control" node_paths=PackedStringArray("ShopGrid", "ItemNameLabel", "PriceLabel", "BuyButton")]
+process_mode = 3
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+script = ExtResource("1_3vo3i")
+ShopGrid = NodePath("Panel/ShopGrid")
+ItemNameLabel = NodePath("Panel/ItemNameLabel")
+PriceLabel = NodePath("Panel/PriceLabel")
+BuyButton = NodePath("Panel/BuyButton")
+
+[node name="Panel" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -300.0
+offset_top = -200.0
+offset_right = 300.0
+offset_bottom = 200.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_iemrp")
+
+[node name="ShopGrid" type="GridContainer" parent="Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 21.0
+offset_top = 22.0
+offset_right = -209.0
+offset_bottom = -22.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/h_separation = 10
+theme_override_constants/v_separation = 10
+columns = 6
+
+[node name="ItemNameLabel" type="Label" parent="Panel"]
+layout_mode = 0
+offset_left = 418.0
+offset_top = 22.0
+offset_right = 500.0
+offset_bottom = 64.0
+theme_override_fonts/font = ExtResource("2_u6qkv")
+theme_override_font_sizes/font_size = 0
+text = "SHOP"
+label_settings = SubResource("LabelSettings_2iv36")
+
+[node name="PriceLabel" type="Label" parent="Panel"]
+layout_mode = 0
+offset_left = 418.0
+offset_top = 55.0
+offset_right = 500.0
+offset_bottom = 97.0
+theme_override_fonts/font = ExtResource("2_u6qkv")
+
+[node name="BuyButton" type="Button" parent="Panel"]
+layout_mode = 0
+offset_left = 414.0
+offset_top = 347.0
+offset_right = 530.0
+offset_bottom = 378.0
+theme_override_fonts/font = ExtResource("2_u6qkv")
+text = "BUY"

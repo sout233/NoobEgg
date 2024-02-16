@@ -16,6 +16,8 @@ public partial class Enemy : global::NoobEgg.Scenes.Character.Character
     [Export]
     public AnimatedSprite2D AnimatedSprite;
 
+    public Player.Player Player;
+
     private Vector2 _knockback = Vector2.Zero;
 
     // FUNC DOWN
@@ -53,6 +55,7 @@ public partial class Enemy : global::NoobEgg.Scenes.Character.Character
     {
         AttackedSoundPlayer.Reparent(GetParent().GetParent());
         GameStatus.CurrentScore += 2;
+        Player.Money += 5;
         
         QueueFree();
     }
