@@ -1,6 +1,5 @@
-[gd_scene load_steps=16 format=3 uid="uid://dg6f28sfgtb1a"]
+[gd_scene load_steps=15 format=3 uid="uid://dg6f28sfgtb1a"]
 
-[ext_resource type="PackedScene" uid="uid://b3jo4xbia802f" path="res://Scenes/UI/shop_menu.tscn" id="3_605eg"]
 [ext_resource type="Texture2D" uid="uid://deh72c4pqbls5" path="res://Resources/Images/bg.png" id="3_fb06q"]
 [ext_resource type="PackedScene" uid="uid://oyii35mwntjp" path="res://Scenes/Character/Player/noob.tscn" id="4_43j1d"]
 [ext_resource type="Script" path="res://Scenes/GamePlay/GameManager.cs" id="6_h2c6i"]
@@ -1182,7 +1181,7 @@ shadow_size = 10
 
 [node name="Main" type="Node2D"]
 
-[node name="GameManager" type="Node" parent="." node_paths=PackedStringArray("SpawnTimer", "HealthBar", "DamageScreenAnimationPlayer", "AmmoLabel", "ScoreBar", "MoneyLabel")]
+[node name="GameManager" type="Node" parent="." node_paths=PackedStringArray("SpawnTimer", "HealthBar", "DamageScreenAnimationPlayer", "AmmoLabel", "ScoreBar")]
 script = ExtResource("6_h2c6i")
 SpawnTimer = NodePath("SpawnTimer")
 Spawner = ExtResource("7_nh5i5")
@@ -1190,7 +1189,6 @@ HealthBar = NodePath("../GameHUD/HealthBar")
 DamageScreenAnimationPlayer = NodePath("../GameHUD/DamageScreen/AnimationPlayer")
 AmmoLabel = NodePath("../GameHUD/AmmorLabel")
 ScoreBar = NodePath("../GameHUD/ScoreBar")
-MoneyLabel = NodePath("../GameHUD/MoneyLabel")
 
 [node name="SpawnTimer" type="Timer" parent="GameManager"]
 
@@ -1211,7 +1209,6 @@ layer_2/tile_data = PackedInt32Array(917508, 327680, 1, 786437, 327680, 1, 98304
 
 [node name="Noob" parent="." instance=ExtResource("4_43j1d")]
 position = Vector2(294, 184)
-ShopMenuScene = ExtResource("3_605eg")
 
 [node name="GameHUD" type="CanvasLayer" parent="."]
 process_mode = 3

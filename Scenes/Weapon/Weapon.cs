@@ -10,7 +10,7 @@ public partial class Weapon : Node2D
 
     [Export] public float Damage = 10;
 
-    [Export] public float KnockBackForce = 100;
+    [Export] public float KnockBackForce = 1000;
 
     [Export] public AudioStreamPlayer2D Audio;
 
@@ -18,7 +18,7 @@ public partial class Weapon : Node2D
 
     private Character.Player.Player _player;
     private double _shootTimer;
-    private double _shootRate = 0.1f;
+    private double _shootRate = 0.0000000001f;
 
     public override void _EnterTree()
     {
