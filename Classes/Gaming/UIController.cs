@@ -12,5 +12,7 @@ namespace NoobEgg.Classes.Gaming
 
         
         public static ProgressBar ScoreBar { get; set; }
+        
+        public static Label MoneyLabel { get; set; }
     }
 }

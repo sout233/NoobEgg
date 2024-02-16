@@ -4,6 +4,7 @@ using Godot;
 using NoobEgg.Classes;
 using NoobEgg.Classes.Gaming;
 using NoobEgg.Gaming;
+using NoobEgg.Scenes.UI;
 
 namespace NoobEgg.Scenes.Character.Player;
 
@@ -18,17 +19,34 @@ public partial class Player : Character
     [Export] public PackedScene Bullet;
     [Export] public PackedScene AttackedParticles;
     [Export] public AudioStreamPlayer2D AttackedSoundPlayer;
+    [Export] public PackedScene ShopMenuScene;
 
-    protected Weapon.Weapon Wp01;
+    protected Weapon.WeaponGun Wp01;
 
     private int _ammo;
     private Vector2 _knockback = Vector2.Zero;
+    private int _money;
 
+    public bool Shootable { get; set; } = true;
+    
+    public int Money
+    {
+        get => _money;
+        set
+        {
+            _money = value;
+            UiController.MoneyLabel.Text = "$" + Money;
+        }
+    }
 
     public int Ammo
     {
         get => NoobAntiCheat.DeValue(_ammo);
-        set => _ammo = value > 0 ? NoobAntiCheat.EnValue(value) : 0;
+        set
+        {
+            _ammo = value > 0 ? NoobAntiCheat.EnValue(value) : 0;
+            UiController.AmmoLabel.Text = Ammo.ToString();
+        }
     }
 
     public override async void _EnterTree()
@@ -36,6 +54,18 @@ public partial class Player : Character
         await Task.Delay(100);
         // UiController.AmmoLabel.Text = Ammo.ToString();
         UiController.HealthBar.Value = Health;
+        // Ammo = Wp01.TotalAmmo;
+    }
+
+    public override void _Process(double delta)
+    {
+        if (Input.IsActionJustPressed("OpenBuyMenu"))
+        {
+            if (GetTree().CurrentScene.HasNode("GameHUD/ShopMenu")) return;
+            var shopMenu = ShopMenuScene.Instantiate<ShopMenu>();
+            shopMenu.Player = this;
+            GetTree().CurrentScene.GetNode("GameHUD").AddChild(shopMenu);
+        }
     }
 
 
@@ -125,4 +155,14 @@ public partial class Player : Character
     }
 
     #endregion 常规角色方法
+
+    public void BuyItem(string name, int price)
+    {
+        GD.Print(name);
+        if (name == "Ammo")
+        {
+            Ammo += 20;
+            Money -= price;
+        }
+    }
 }

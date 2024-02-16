@@ -1,5 +1,6 @@
 [gd_scene load_steps=16 format=3 uid="uid://dg6f28sfgtb1a"]
 
+[ext_resource type="PackedScene" uid="uid://b3jo4xbia802f" path="res://Scenes/UI/shop_menu.tscn" id="3_605eg"]
 [ext_resource type="Texture2D" uid="uid://deh72c4pqbls5" path="res://Resources/Images/bg.png" id="3_fb06q"]
 [ext_resource type="PackedScene" uid="uid://oyii35mwntjp" path="res://Scenes/Character/Player/noob.tscn" id="4_43j1d"]
 [ext_resource type="Script" path="res://Scenes/GamePlay/GameManager.cs" id="6_h2c6i"]
@@ -1179,13 +1180,9 @@ corner_radius_bottom_right = 5
 shadow_color = Color(0, 0, 0, 0.286275)
 shadow_size = 10
 
-[sub_resource type="Environment" id="Environment_qkjis"]
-background_mode = 3
-glow_enabled = true
-
 [node name="Main" type="Node2D"]
 
-[node name="GameManager" type="Node" parent="." node_paths=PackedStringArray("SpawnTimer", "HealthBar", "DamageScreenAnimationPlayer", "AmmoLabel", "ScoreBar")]
+[node name="GameManager" type="Node" parent="." node_paths=PackedStringArray("SpawnTimer", "HealthBar", "DamageScreenAnimationPlayer", "AmmoLabel", "ScoreBar", "MoneyLabel")]
 script = ExtResource("6_h2c6i")
 SpawnTimer = NodePath("SpawnTimer")
 Spawner = ExtResource("7_nh5i5")
@@ -1193,6 +1190,7 @@ HealthBar = NodePath("../GameHUD/HealthBar")
 DamageScreenAnimationPlayer = NodePath("../GameHUD/DamageScreen/AnimationPlayer")
 AmmoLabel = NodePath("../GameHUD/AmmorLabel")
 ScoreBar = NodePath("../GameHUD/ScoreBar")
+MoneyLabel = NodePath("../GameHUD/MoneyLabel")
 
 [node name="SpawnTimer" type="Timer" parent="GameManager"]
 
@@ -1213,8 +1211,10 @@ layer_2/tile_data = PackedInt32Array(917508, 327680, 1, 786437, 327680, 1, 98304
 
 [node name="Noob" parent="." instance=ExtResource("4_43j1d")]
 position = Vector2(294, 184)
+ShopMenuScene = ExtResource("3_605eg")
 
 [node name="GameHUD" type="CanvasLayer" parent="."]
+process_mode = 3
 
 [node name="HealthBar" type="ProgressBar" parent="GameHUD"]
 anchors_preset = 2
@@ -1253,12 +1253,27 @@ anchor_bottom = 1.0
 offset_left = -90.0
 offset_top = -103.0
 offset_right = -30.0
-offset_bottom = -10.0
+offset_bottom = -13.0
 grow_horizontal = 0
 grow_vertical = 0
 theme_override_fonts/font = ExtResource("7_pigq4")
 theme_override_font_sizes/font_size = 60
 text = "90"
+horizontal_alignment = 2
+
+[node name="MoneyLabel" type="Label" parent="GameHUD"]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -92.0
+offset_top = 10.0
+offset_right = -32.0
+offset_bottom = 103.0
+grow_horizontal = 0
+theme_override_colors/font_color = Color(0.741176, 1, 0.858824, 1)
+theme_override_fonts/font = ExtResource("7_pigq4")
+theme_override_font_sizes/font_size = 40
+text = "$0"
 horizontal_alignment = 2
 
 [node name="ScoreBar" type="ProgressBar" parent="GameHUD"]
@@ -1277,6 +1292,5 @@ layer = 3
 [node name="AimCursor" parent="TopLayer" instance=ExtResource("7_ywtjx")]
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
-environment = SubResource("Environment_qkjis")
 
 [connection signal="timeout" from="GameManager/SpawnTimer" to="GameManager" method="EnemyGenerate"]

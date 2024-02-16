@@ -3,7 +3,6 @@ using Godot;
 using NoobEgg.Classes;
 using NoobEgg.Classes.Configs;
 using NoobEgg.Classes.Gaming;
-using Range = Godot.Range;
 
 namespace NoobEgg.Scenes.GamePlay;
 
@@ -21,6 +20,9 @@ public partial class GameManager : Node
 
     [Export] public ProgressBar ScoreBar;
 
+    [Export] public Label MoneyLabel;
+
+
     private int _day = 1;
 
 
@@ -30,6 +32,7 @@ public partial class GameManager : Node
         UiController.DamageScreenAnimationPlayer = DamageScreenAnimationPlayer;
         UiController.AmmoLabel = AmmoLabel;
         UiController.ScoreBar = ScoreBar;
+        UiController.MoneyLabel = MoneyLabel;
 
         ScoreBar.ValueChanged += OnValueChange;
 
@@ -41,7 +44,8 @@ public partial class GameManager : Node
 
         GameStatus.AimScore = GameScoreConfig.GetAimScoreByDay(_day);
     }
-
+    
+    
     private void OnValueChange(double value)
     {
         if (!(Math.Abs(value - ScoreBar.MaxValue) < 1)) return;
@@ -84,7 +88,7 @@ public partial class GameManager : Node
         spawner.Position = new Vector2(random.Next(tileLeftX, tileRightX), random.Next(tileTopY, tileBottomY));
         GetTree().CurrentScene.AddSibling(spawner);
 
-        SpawnTimer.WaitTime = random.NextDouble()*GameScoreConfig.GetWaitTimeByDay(_day);
+        SpawnTimer.WaitTime = random.NextDouble() * GameScoreConfig.GetWaitTimeByDay(_day);
         SpawnTimer.Start();
     }
 }

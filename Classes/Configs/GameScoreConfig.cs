@@ -14,7 +14,11 @@ public static class GameScoreConfig
 
     public static double GetWaitTimeByDay(int day)
     {
-        var time = 10 / (day + 1.14);
+        var time = Math.Log(20 / (day + 1.14));
+        if (time < 0)
+        {
+            time = 0.1;
+        }
         GD.Print($"wait time:{time}");
         return time;
     }
