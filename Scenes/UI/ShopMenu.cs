@@ -30,6 +30,8 @@ public partial class ShopMenu : Control
         _shopItems = new()
         {
             new() { ItemName = "Ammo", ItemPrice = 10, ItemIcon = "res://Archive/Resource/images/wp01.png" },
+            new() { ItemName = "Ammo*114", ItemPrice = 1, ItemIcon = "res://Archive/Resource/images/wp01.png" },
+            
         };
 
         foreach (var item in _shopItems)
