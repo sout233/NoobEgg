@@ -37,7 +37,7 @@ public partial class Enemy : global::NoobEgg.Scenes.Character.Character
         attackedParticles.Gravity = attack.StartDirection * 100;
         attackedParticles.Emitting = true;
         attackedParticles.Position = Position;
-        AddSibling(attackedParticles);
+        GetParent().AddSibling(attackedParticles);
 
         AttackedSoundPlayer.Play();
 
@@ -51,7 +51,7 @@ public partial class Enemy : global::NoobEgg.Scenes.Character.Character
         }
     }
 
-    private void Die()
+    public void Die()
     {
         AttackedSoundPlayer.Reparent(GetParent().GetParent());
         GameStatus.CurrentScore += 2;

@@ -1,6 +1,7 @@
-[gd_scene load_steps=16 format=3 uid="uid://dg6f28sfgtb1a"]
+[gd_scene load_steps=18 format=3 uid="uid://dg6f28sfgtb1a"]
 
 [ext_resource type="PackedScene" uid="uid://b3jo4xbia802f" path="res://Scenes/UI/shop_menu.tscn" id="3_605eg"]
+[ext_resource type="PackedScene" uid="uid://dy6dehim8ybh8" path="res://Scenes/Character/killed_particles.tscn" id="3_afmfq"]
 [ext_resource type="Texture2D" uid="uid://deh72c4pqbls5" path="res://Resources/Images/bg.png" id="3_fb06q"]
 [ext_resource type="PackedScene" uid="uid://oyii35mwntjp" path="res://Scenes/Character/Player/noob.tscn" id="4_43j1d"]
 [ext_resource type="Script" path="res://Scenes/GamePlay/GameManager.cs" id="6_h2c6i"]
@@ -1129,12 +1130,13 @@ texture = ExtResource("3_fb06q")
 physics_layer_0/collision_layer = 1
 sources/0 = SubResource("TileSetAtlasSource_mq8ra")
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_p6sbo"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_nsiou"]
+bg_color = Color(0.737255, 0.54902, 0.490196, 0.705882)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qg6nf"]
 bg_color = Color(0.854902, 0.34902, 0.278431, 1)
-corner_radius_top_left = 5
-corner_radius_top_right = 5
-corner_radius_bottom_right = 5
-corner_radius_bottom_left = 5
+shadow_color = Color(0.854902, 0.34902, 0.278431, 0.196078)
+shadow_size = 12
 
 [sub_resource type="Animation" id="Animation_cbyuy"]
 length = 0.001
@@ -1175,14 +1177,12 @@ _data = {
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_iac4f"]
 bg_color = Color(0, 0.772549, 0.803922, 1)
-corner_radius_top_right = 5
-corner_radius_bottom_right = 5
-shadow_color = Color(0, 0, 0, 0.286275)
-shadow_size = 10
+shadow_color = Color(0, 0.772549, 0.803922, 0.196078)
+shadow_size = 24
 
 [node name="Main" type="Node2D"]
 
-[node name="GameManager" type="Node" parent="." node_paths=PackedStringArray("SpawnTimer", "HealthBar", "DamageScreenAnimationPlayer", "AmmoLabel", "ScoreBar", "MoneyLabel")]
+[node name="GameManager" type="Node" parent="." node_paths=PackedStringArray("SpawnTimer", "HealthBar", "DamageScreenAnimationPlayer", "AmmoLabel", "ScoreBar", "MoneyLabel", "EnemyStack")]
 script = ExtResource("6_h2c6i")
 SpawnTimer = NodePath("SpawnTimer")
 Spawner = ExtResource("7_nh5i5")
@@ -1191,6 +1191,8 @@ DamageScreenAnimationPlayer = NodePath("../GameHUD/DamageScreen/AnimationPlayer"
 AmmoLabel = NodePath("../GameHUD/AmmorLabel")
 ScoreBar = NodePath("../GameHUD/ScoreBar")
 MoneyLabel = NodePath("../GameHUD/MoneyLabel")
+EnemyStack = NodePath("../EnemyStack")
+AttackedParticles = ExtResource("3_afmfq")
 
 [node name="SpawnTimer" type="Timer" parent="GameManager"]
 
@@ -1225,8 +1227,9 @@ offset_top = -40.0
 offset_right = 240.0
 offset_bottom = -30.0
 grow_vertical = 0
-theme_override_styles/fill = SubResource("StyleBoxFlat_p6sbo")
-value = 100.0
+theme_override_styles/background = SubResource("StyleBoxFlat_nsiou")
+theme_override_styles/fill = SubResource("StyleBoxFlat_qg6nf")
+value = 50.0
 show_percentage = false
 
 [node name="DamageScreen" type="TextureRect" parent="GameHUD"]
@@ -1272,7 +1275,7 @@ offset_bottom = 103.0
 grow_horizontal = 0
 theme_override_colors/font_color = Color(0.741176, 1, 0.858824, 1)
 theme_override_fonts/font = ExtResource("7_pigq4")
-theme_override_font_sizes/font_size = 40
+theme_override_font_sizes/font_size = 36
 text = "$0"
 horizontal_alignment = 2
 
@@ -1284,6 +1287,7 @@ offset_bottom = 27.0
 grow_horizontal = 2
 scale = Vector2(1, 0.5)
 theme_override_styles/fill = SubResource("StyleBoxFlat_iac4f")
+value = 42.0
 show_percentage = false
 
 [node name="TopLayer" type="CanvasLayer" parent="."]
@@ -1292,5 +1296,7 @@ layer = 3
 [node name="AimCursor" parent="TopLayer" instance=ExtResource("7_ywtjx")]
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+
+[node name="EnemyStack" type="Node" parent="."]
 
 [connection signal="timeout" from="GameManager/SpawnTimer" to="GameManager" method="EnemyGenerate"]
