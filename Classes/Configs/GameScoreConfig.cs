@@ -1,5 +1,6 @@
 ﻿using System;
 using Godot;
+using NoobEgg.Classes.Gaming;
 
 namespace NoobEgg.Classes.Configs;
 
@@ -9,6 +10,7 @@ public static class GameScoreConfig
     {
         var score = (int)(Math.Log(day + 1) * 114 / 5.14 + day * 5);
         GD.Print($"第{day}天, AimScore: {score}");
+        UiController.DayLabel.Text = "DAY " + day;
         return score;
     }
 

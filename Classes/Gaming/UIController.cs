@@ -10,9 +10,10 @@ namespace NoobEgg.Classes.Gaming
 
         public static Label AmmoLabel { get; set; }
 
-        
         public static ProgressBar ScoreBar { get; set; }
-        
+
         public static Label MoneyLabel { get; set; }
+
+        public static Label DayLabel { get; set; }
     }
 }
