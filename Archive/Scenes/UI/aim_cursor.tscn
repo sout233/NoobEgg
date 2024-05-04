@@ -29,8 +29,10 @@ animations = [{
 }]
 
 [node name="AimCursor" type="Node2D"]
+process_mode = 3
 
 [node name="CenterDot" type="Node2D" parent="."]
+process_mode = 3
 scale = Vector2(0.5, 0.5)
 script = ExtResource("1_7ltxt")
 

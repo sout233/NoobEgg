@@ -1,6 +1,7 @@
-[gd_scene load_steps=16 format=3 uid="uid://dg6f28sfgtb1a"]
+[gd_scene load_steps=20 format=3 uid="uid://dg6f28sfgtb1a"]
 
 [ext_resource type="PackedScene" uid="uid://b3jo4xbia802f" path="res://Scenes/UI/shop_menu.tscn" id="3_605eg"]
+[ext_resource type="PackedScene" uid="uid://dy6dehim8ybh8" path="res://Scenes/Character/killed_particles.tscn" id="3_afmfq"]
 [ext_resource type="Texture2D" uid="uid://deh72c4pqbls5" path="res://Resources/Images/bg.png" id="3_fb06q"]
 [ext_resource type="PackedScene" uid="uid://oyii35mwntjp" path="res://Scenes/Character/Player/noob.tscn" id="4_43j1d"]
 [ext_resource type="Script" path="res://Scenes/GamePlay/GameManager.cs" id="6_h2c6i"]
@@ -8,6 +9,8 @@
 [ext_resource type="PackedScene" uid="uid://bd0qxtpah6ne5" path="res://Scenes/Items/spawner.tscn" id="7_nh5i5"]
 [ext_resource type="FontFile" uid="uid://b00xxyf3bb4wc" path="res://Archive/Resource/fonts/fusion-pixel-12px-proportional.otf" id="7_pigq4"]
 [ext_resource type="PackedScene" uid="uid://brpveq6q2cctx" path="res://Archive/Scenes/UI/aim_cursor.tscn" id="7_ywtjx"]
+[ext_resource type="LabelSettings" uid="uid://onrceah81ndo" path="res://Resources/new_label_settings.tres" id="9_g4pkt"]
+[ext_resource type="Theme" uid="uid://jjcqgbslw8lo" path="res://Theme/noob_theme.tres" id="10_81ibd"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_mq8ra"]
 texture = ExtResource("3_fb06q")
@@ -1129,12 +1132,13 @@ texture = ExtResource("3_fb06q")
 physics_layer_0/collision_layer = 1
 sources/0 = SubResource("TileSetAtlasSource_mq8ra")
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_p6sbo"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_nsiou"]
+bg_color = Color(0.737255, 0.54902, 0.490196, 0.705882)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qg6nf"]
 bg_color = Color(0.854902, 0.34902, 0.278431, 1)
-corner_radius_top_left = 5
-corner_radius_top_right = 5
-corner_radius_bottom_right = 5
-corner_radius_bottom_left = 5
+shadow_color = Color(0.854902, 0.34902, 0.278431, 0.196078)
+shadow_size = 12
 
 [sub_resource type="Animation" id="Animation_cbyuy"]
 length = 0.001
@@ -1175,14 +1179,12 @@ _data = {
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_iac4f"]
 bg_color = Color(0, 0.772549, 0.803922, 1)
-corner_radius_top_right = 5
-corner_radius_bottom_right = 5
-shadow_color = Color(0, 0, 0, 0.286275)
-shadow_size = 10
+shadow_color = Color(0, 0.772549, 0.803922, 0.196078)
+shadow_size = 24
 
 [node name="Main" type="Node2D"]
 
-[node name="GameManager" type="Node" parent="." node_paths=PackedStringArray("SpawnTimer", "HealthBar", "DamageScreenAnimationPlayer", "AmmoLabel", "ScoreBar", "MoneyLabel")]
+[node name="GameManager" type="Node" parent="." node_paths=PackedStringArray("SpawnTimer", "HealthBar", "DamageScreenAnimationPlayer", "AmmoLabel", "ScoreBar", "MoneyLabel", "EnemyStack", "DayLabel", "PauseMenu", "OptionPanel")]
 script = ExtResource("6_h2c6i")
 SpawnTimer = NodePath("SpawnTimer")
 Spawner = ExtResource("7_nh5i5")
@@ -1191,6 +1193,11 @@ DamageScreenAnimationPlayer = NodePath("../GameHUD/DamageScreen/AnimationPlayer"
 AmmoLabel = NodePath("../GameHUD/AmmorLabel")
 ScoreBar = NodePath("../GameHUD/ScoreBar")
 MoneyLabel = NodePath("../GameHUD/MoneyLabel")
+EnemyStack = NodePath("../EnemyStack")
+AttackedParticles = ExtResource("3_afmfq")
+DayLabel = NodePath("../GameHUD/DayLabel")
+PauseMenu = NodePath("../GameHUD/PauseMenu")
+OptionPanel = NodePath("../GameHUD/OptionPanel")
 
 [node name="SpawnTimer" type="Timer" parent="GameManager"]
 
@@ -1225,8 +1232,9 @@ offset_top = -40.0
 offset_right = 240.0
 offset_bottom = -30.0
 grow_vertical = 0
-theme_override_styles/fill = SubResource("StyleBoxFlat_p6sbo")
-value = 100.0
+theme_override_styles/background = SubResource("StyleBoxFlat_nsiou")
+theme_override_styles/fill = SubResource("StyleBoxFlat_qg6nf")
+value = 50.0
 show_percentage = false
 
 [node name="DamageScreen" type="TextureRect" parent="GameHUD"]
@@ -1265,16 +1273,26 @@ horizontal_alignment = 2
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
-offset_left = -92.0
+offset_left = -84.0
 offset_top = 10.0
-offset_right = -32.0
+offset_right = -24.0
 offset_bottom = 103.0
 grow_horizontal = 0
 theme_override_colors/font_color = Color(0.741176, 1, 0.858824, 1)
 theme_override_fonts/font = ExtResource("7_pigq4")
-theme_override_font_sizes/font_size = 40
+theme_override_font_sizes/font_size = 36
 text = "$0"
 horizontal_alignment = 2
+
+[node name="DayLabel" type="Label" parent="GameHUD"]
+offset_left = 24.0
+offset_top = 14.0
+offset_right = 129.0
+offset_bottom = 107.0
+theme_override_colors/font_color = Color(0.689345, 1, 0.963491, 1)
+theme_override_fonts/font = ExtResource("7_pigq4")
+theme_override_font_sizes/font_size = 36
+text = "DAY 0"
 
 [node name="ScoreBar" type="ProgressBar" parent="GameHUD"]
 anchors_preset = 10
@@ -1284,7 +1302,140 @@ offset_bottom = 27.0
 grow_horizontal = 2
 scale = Vector2(1, 0.5)
 theme_override_styles/fill = SubResource("StyleBoxFlat_iac4f")
+value = 42.0
 show_percentage = false
+
+[node name="PauseMenu" type="Control" parent="GameHUD"]
+process_mode = 3
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ColorRect" type="ColorRect" parent="GameHUD/PauseMenu"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.498039)
+
+[node name="PausedLabel" type="Label" parent="GameHUD/PauseMenu"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -107.5
+offset_top = -85.0
+offset_right = 107.5
+offset_bottom = 5.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("7_pigq4")
+theme_override_font_sizes/font_size = 60
+text = "PAUSED"
+horizontal_alignment = 1
+
+[node name="ContinueButton" type="Button" parent="GameHUD/PauseMenu"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.37934
+anchor_top = 0.666667
+anchor_right = 0.447917
+anchor_bottom = 0.714506
+offset_left = 8.0
+offset_top = -96.0
+offset_right = 185.0
+offset_bottom = -86.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Continue"
+
+[node name="Back2MenuButton" type="Button" parent="GameHUD/PauseMenu"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.385417
+anchor_top = 0.580247
+anchor_right = 0.607639
+anchor_bottom = 0.643519
+offset_left = 1.0
+offset_top = 16.0
+offset_right = 1.0
+offset_bottom = 16.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Back2Menu"
+
+[node name="OptionPanel" type="Control" parent="GameHUD"]
+visible = false
+layout_mode = 3
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = 48.0
+offset_top = 126.0
+offset_right = 88.0
+offset_bottom = 166.0
+grow_horizontal = 0
+
+[node name="Panel" type="Panel" parent="GameHUD/OptionPanel"]
+layout_mode = 1
+offset_right = 284.0
+offset_bottom = 372.0
+
+[node name="RemainingLabel" type="Label" parent="GameHUD/OptionPanel/Panel"]
+layout_mode = 0
+offset_left = 20.0
+offset_top = 319.0
+offset_right = 226.0
+offset_bottom = 359.0
+text = "Remaining: 10s"
+label_settings = ExtResource("9_g4pkt")
+
+[node name="Label" type="Label" parent="GameHUD/OptionPanel/Panel"]
+offset_left = 15.0
+offset_top = 14.0
+offset_right = 210.0
+offset_bottom = 37.0
+text = "Which one do u 
+want to get dude?"
+label_settings = ExtResource("9_g4pkt")
+
+[node name="Button" type="Button" parent="GameHUD/OptionPanel"]
+layout_mode = 0
+offset_left = 16.0
+offset_top = 99.0
+offset_right = 267.0
+offset_bottom = 155.0
+theme = ExtResource("10_81ibd")
+theme_override_font_sizes/font_size = 24
+text = "增加10HP"
+
+[node name="Button2" type="Button" parent="GameHUD/OptionPanel"]
+layout_mode = 0
+offset_left = 16.0
+offset_top = 171.0
+offset_right = 267.0
+offset_bottom = 227.0
+theme = ExtResource("10_81ibd")
+theme_override_font_sizes/font_size = 24
+text = "增加10HP"
+
+[node name="Button3" type="Button" parent="GameHUD/OptionPanel"]
+layout_mode = 0
+offset_left = 16.0
+offset_top = 251.0
+offset_right = 267.0
+offset_bottom = 307.0
+theme = ExtResource("10_81ibd")
+theme_override_font_sizes/font_size = 24
+text = "增加10HP"
 
 [node name="TopLayer" type="CanvasLayer" parent="."]
 layer = 3
@@ -1293,4 +1444,7 @@ layer = 3
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 
+[node name="EnemyStack" type="Node" parent="."]
+
 [connection signal="timeout" from="GameManager/SpawnTimer" to="GameManager" method="EnemyGenerate"]
+[connection signal="pressed" from="GameHUD/PauseMenu/ContinueButton" to="GameManager" method="ContinueGame"]

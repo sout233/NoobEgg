@@ -20,16 +20,16 @@ public partial class ShopItem : Button
         TooltipText = ItemName;
         IconAlignment = HorizontalAlignment.Center;
         CustomMinimumSize = Vector2.One * 50;
-
-        if (GetThemeStylebox("normal").Duplicate() is not StyleBoxFlat style) return;
-        style.BgColor = new Color("d3850064");
-        style.BorderColor = new Color("ffbf65");
-        style.BorderWidthTop = 2;
-        style.BorderWidthLeft = 2;
-        style.BorderWidthRight = 2;
-        style.BorderWidthBottom = 2;
-
-        AddThemeStyleboxOverride("normal", style);
+        
+        // if (GetThemeStylebox("normal").Duplicate() is not StyleBoxFlat style) return;
+        // style.BgColor = new Color("d3850064");
+        // style.BorderColor = new Color("ffbf65");
+        // style.BorderWidthTop = 2;
+        // style.BorderWidthLeft = 2;
+        // style.BorderWidthRight = 2;
+        // style.BorderWidthBottom = 2;
+        //
+        // AddThemeStyleboxOverride("normal", style);
 
         Pressed += OnPressed;
     }
