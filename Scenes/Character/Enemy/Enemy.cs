@@ -55,7 +55,8 @@ public partial class Enemy : global::NoobEgg.Scenes.Character.Character
     {
         AttackedSoundPlayer.Reparent(GetParent().GetParent());
         GameStatus.CurrentScore += 2;
-        Player.Money += 5;
+        Player.Money += 15;
+        GetTree().CurrentScene.GetNode<GameManager>("GameManager").CurrentScore += 114;
         
         QueueFree();
     }

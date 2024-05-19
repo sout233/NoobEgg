@@ -1,6 +1,7 @@
-[gd_scene load_steps=8 format=3 uid="uid://brpveq6q2cctx"]
+[gd_scene load_steps=9 format=3 uid="uid://brpveq6q2cctx"]
 
 [ext_resource type="Script" path="res://Archive/Scenes/UI/CenterDot.gd" id="1_7ltxt"]
+[ext_resource type="Script" path="res://Archive/Scenes/UI/AimCursor.cs" id="1_enpgy"]
 [ext_resource type="Texture2D" uid="uid://5kjp472vdaj8" path="res://Archive/Resource/idk/colored-transparent.png" id="2_7wvdk"]
 [ext_resource type="Script" path="res://Archive/Scenes/UI/AimCursor.gd" id="3_rjjim"]
 
@@ -30,6 +31,7 @@ animations = [{
 
 [node name="AimCursor" type="Node2D"]
 process_mode = 3
+script = ExtResource("1_enpgy")
 
 [node name="CenterDot" type="Node2D" parent="."]
 process_mode = 3

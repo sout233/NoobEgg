@@ -11,7 +11,7 @@ func _process(_delta):
 	var direction_x = Input.get_axis("Left", "Right")
 	var direction_y = Input.get_axis("Up", "Down")
 	if direction_x == 0 and direction_y == 0:
-		tween.tween_property(self, "position", new_position, 0.1)
+		tween.tween_property(self, "global_position", new_position, 0.1)
 	else:
-		tween.tween_property(self, "position", new_position, 0.2)
+		tween.tween_property(self, "global_position", new_position, 0.2)
 

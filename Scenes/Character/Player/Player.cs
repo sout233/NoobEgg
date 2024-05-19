@@ -3,6 +3,7 @@ using Godot;
 using NoobEgg.Classes;
 using NoobEgg.Classes.Gaming;
 using NoobEgg.Gaming;
+using NoobEgg.Scenes.GamePlay;
 using NoobEgg.Scenes.UI;
 
 namespace NoobEgg.Scenes.Character.Player;
@@ -20,14 +21,14 @@ public partial class Player : Character
     [Export] public AudioStreamPlayer2D AttackedSoundPlayer;
     [Export] public PackedScene ShopMenuScene;
 
-    protected Weapon.WeaponGun Wp01;
+    public Weapon.WeaponGun Wp01;
 
     private int _ammo;
     private Vector2 _knockback = Vector2.Zero;
     private int _money;
 
     public bool Shootable { get; set; } = true;
-    
+
     public int Money
     {
         get => _money;
@@ -38,22 +39,23 @@ public partial class Player : Character
         }
     }
 
-    public int Ammo
-    {
-        get => NoobAntiCheat.DeValue(_ammo);
-        set
-        {
-            _ammo = value > 0 ? NoobAntiCheat.EnValue(value) : 0;
-            UiController.AmmoLabel.Text = Ammo.ToString();
-        }
-    }
+    // public int Ammo
+    // {
+    //     get => NoobAntiCheat.DeValue(_ammo);
+    //     set
+    //     {
+    //         _ammo = value > 0 ? NoobAntiCheat.EnValue(value) : 0;
+    //         Wp01.CaissonAmmo = NoobAntiCheat.DeValue(_ammo);
+    //     }
+    // }
 
     public override async void _EnterTree()
     {
         await Task.Delay(100);
-        // UiController.AmmoLabel.Text = Ammo.ToString();
+        // UiController.ClipAmmoLabel.Text = Ammo.ToString();
         UiController.HealthBar.Value = Health;
-        // Ammo = Wp01.TotalAmmo;
+        UiController.HealthBar.GetNode<Label>("Label").Text = $"{Health} / {MaxHealth}";
+        // Ammo = Wp01.CaissonAmmo;
     }
 
     public override void _Process(double delta)
@@ -99,13 +101,21 @@ public partial class Player : Character
         Health -= attack.Damage;
         UiController.HealthBar.Value = Health;
         UiController.DamageScreenAnimationPlayer.Play("damage_screen");
+        UiController.HealthBar.GetNode<Label>("Label").Text = $"{Health} / {MaxHealth}";
+
 
         _knockback = attack.StartDirection * attack.KnockBackForce;
 
         if (Health <= 0)
         {
-            //Die();
+            Die();
         }
+    }
+
+    private void Die()
+    {
+        GetTree().CurrentScene.GetNode<GameManager>("GameManager").GameOver();
+        QueueFree();
     }
 
     protected void PlayAnimation()
@@ -160,7 +170,7 @@ public partial class Player : Character
         GD.Print(name);
         if (name == "Ammo")
         {
-            Ammo += 20;
+            Wp01.CaissonAmmo += 20;
             Money -= price;
         }
     }
