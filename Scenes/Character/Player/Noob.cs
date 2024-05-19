@@ -5,7 +5,7 @@ namespace NoobEgg.Scenes.Character.Player;
 
 public partial class Noob : Player
 {
-    private Weapon.Weapon _weapon;
+    private Weapon.WeaponGun _weapon;
 
     public override void _Ready()
     {
@@ -15,7 +15,7 @@ public partial class Noob : Player
         _weapon = Wp01;
 
         Speed = 700f;
-        Ammo = 114;
+        // Ammo = 114;
         Health = MaxHealth;
     }
 

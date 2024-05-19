@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Godot;
+using NoobEgg.Archive.Scenes.UI;
 using NoobEgg.Classes;
 using NoobEgg.Classes.Configs;
 using NoobEgg.Classes.Gaming;
 using NoobEgg.Scenes.Character.Enemy;
+using NoobEgg.Scenes.Character.Player;
 
 namespace NoobEgg.Scenes.GamePlay;
 
@@ -18,7 +20,9 @@ public partial class GameManager : Node
 
     [Export] public AnimationPlayer DamageScreenAnimationPlayer;
 
-    [Export] public Label AmmoLabel;
+    [Export] public Label ClipAmmoLabel;
+
+    [Export] public Label CaissonAmmoLabel;
 
     [Export] public ProgressBar ScoreBar;
 
@@ -32,22 +36,43 @@ public partial class GameManager : Node
 
     [Export] public Control PauseMenu;
 
+    [Export] public Control GameOverMenu;
+
     [Export] public Control OptionPanel;
 
+    [Export] public Node2D AimCursor;
+
+    [Export] public Label ScoreLabel;
+
+    [Export] public AudioStreamPlayer2D BgmAudioStreamPlayer;
+
+    public int CurrentScore
+    {
+        get => _currentScore;
+        set
+        {
+            _currentScore = value;
+            ScoreLabel.Text = CurrentScore.ToString();
+        }
+    }
 
     private int _day = 1;
 
     private bool _canGenEnemy = true;
 
+    public int OptionJumpedValue = 0;
+    private int _currentScore;
 
     public override void _Ready()
     {
         UiController.HealthBar = HealthBar;
         UiController.DamageScreenAnimationPlayer = DamageScreenAnimationPlayer;
-        UiController.AmmoLabel = AmmoLabel;
+        UiController.ClipAmmoLabel = ClipAmmoLabel;
         UiController.ScoreBar = ScoreBar;
         UiController.MoneyLabel = MoneyLabel;
         UiController.DayLabel = DayLabel;
+        UiController.CaissonAmmoLabel = CaissonAmmoLabel;
+        UiController.AimCursor = AimCursor as AimCursor;
 
         GameStatus.CurrentScore = 0;
         GameStatus.AimScore = GameScoreConfig.GetAimScoreByDay(_day);
@@ -67,17 +92,53 @@ public partial class GameManager : Node
 
         if (GetTree().CurrentScene.HasNode("GameHUD/ShopMenu")) return;
 
+        PauseGame();
+    }
+
+    private void PauseGame()
+    {
         PauseMenu.Show();
 
         GetTree().Paused = true;
+    }
+
+    public void GameOver()
+    {
+        GameOverMenu.Show();
+
+        GameOverMenu.GetNode<Label>("FinallyScoreLabel").Text = "最终成绩: " + CurrentScore;
+
+        GetTree().Paused = true;
+    }
+
+    private void RestartGame()
+    {
+        GetTree().Paused = false;
+        GetTree().ReloadCurrentScene();
     }
 
     private void ShowOptionPanel()
     {
         OptionPanel.Show();
 
+        // 随机选择一个ActionBundle
+        var random = new Random();
+
+        for (var i = 1; i <= 3; i++)
+        {
+            var optionButton = OptionPanel.GetNode<OptionButton>("OptionButton" + i);
+            optionButton.Disabled = false;
+
+            var randomIndex = random.Next(GainOptions.DefaultActions.Count);
+            var randomActionBundle = GainOptions.DefaultActions[randomIndex];
+
+            optionButton.ActionName = $"{randomActionBundle.Name}(${randomActionBundle.Cost})";
+            optionButton.Action = randomActionBundle.Action;
+            optionButton.Cost = randomActionBundle.Cost;
+        }
+
         var tween = GetTree().CreateTween().BindNode(this).SetTrans(Tween.TransitionType.Elastic);
-        tween.TweenProperty(OptionPanel, "position", new Vector2(830, 126), 1.0f);
+        tween.TweenProperty(OptionPanel, "position", new Vector2(700, 126), 1.0f);
     }
 
     private void HideOptionPanel()
@@ -96,7 +157,10 @@ public partial class GameManager : Node
 
     public void Back2Menu()
     {
-        // TODO
+        GD.Print("Back2Menu");
+        Input.MouseMode = Input.MouseModeEnum.Visible;
+        GetTree().Paused = false;
+        GetTree().ChangeSceneToFile("res://Scenes/GamePlay/main_menu.tscn");
     }
 
     private async void OnValueChange(double value)
@@ -112,11 +176,15 @@ public partial class GameManager : Node
 
         ShowOptionPanel();
 
-        for (var i = 10; i >= 0; i--)
+        for (var i = 10; i >= OptionJumpedValue; i--)
         {
             await Task.Delay(1000);
             OptionPanel.GetNode<Panel>("Panel").GetNode<Label>("RemainingLabel").Text = $"Remaining: {i}s";
+            OptionPanel.GetNode<ProgressBar>("ProgressBar").Value = i * 10;
+            GD.Print(i / 10 * 100);
         }
+
+        OptionJumpedValue = 0;
 
         HideOptionPanel();
 
